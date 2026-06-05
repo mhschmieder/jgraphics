@@ -47,9 +47,9 @@ public enum MouseToolMode implements Labeled< MouseToolMode > {
     COPY( "copy" ), 
     PASTE( "paste" );
     
-    final String label;
+    private final String label;
     
-    private MouseToolMode( final String pLabel ) {
+    MouseToolMode(final String pLabel) {
         label = pLabel;
     }
 
@@ -62,6 +62,14 @@ public enum MouseToolMode implements Labeled< MouseToolMode > {
     public MouseToolMode valueOfLabel( final String text ) {
         return ( MouseToolMode ) EnumUtilities.getLabeledEnumFromLabel( 
             text, values() );
+    }
+
+    @Override
+    public String toString() {
+        // NOTE: This override takes care of displaying the current choice in
+        //  its custom label form when a Combo Box is hosted by a Table Cell. It
+        //  also addresses an issue with the Jackson parser if in a JSON file.
+        return label();
     }
 
     public static MouseToolMode defaultValue() {
