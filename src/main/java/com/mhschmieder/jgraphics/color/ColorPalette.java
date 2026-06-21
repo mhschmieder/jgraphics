@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020, 2026 Mark Schmieder. All rights reserved.
+ * Copyright (c) 2023, 2026 Mark Schmieder. All rights reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -21,15 +21,22 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * This file is part of the GraphicsToolkit Library
+ * This file is part of the JPhysics Library
  *
- * You should have received a copy of the MIT License along with the
- * GraphicsToolkit Library. If not, see <https://opensource.org/licenses/MIT>.
+ * You should have received a copy of the MIT License along with the JPhysics
+ * Library. If not, see <https://opensource.org/licenses/MIT>.
  *
- * Project: https://github.com/mhschmieder/graphicstoolkit
+ * Project: https://github.com/mhschmieder/jphysics
  */
+package com.mhschmieder.jgraphics.color;
+
 /**
- * This package contains classes that deal with graphics functionality specific
- * to geometry primitives.
+ * An enumeration of supported Color Palettes, for future enhancements and to
+ * keep the specification of a Custom Palette bundled with supplied palettes.
+ * Currently, only the common Jet Palette is specified with this toolkit, but
+ * implementing this enumeration allows for API design that makes it easy for
+ * derived classes to provide their own custom palettes via method override.
  */
-package com.mhschmieder.jgraphics.geometry;
+public enum ColorPalette {
+    JET, CUSTOM;
+}

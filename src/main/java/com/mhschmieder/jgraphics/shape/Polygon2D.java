@@ -28,7 +28,7 @@
  *
  * Project: https://github.com/mhschmieder/graphicstoolkit
  */
-package com.mhschmieder.jgraphics.geometry;
+package com.mhschmieder.jgraphics.shape;
 
 import org.apache.commons.math3.util.FastMath;
 

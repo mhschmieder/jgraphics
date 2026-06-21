@@ -32,7 +32,7 @@
  * This package contains classes that deal with graphics functionality specific
  * to geometry primitives.
  */
-package com.mhschmieder.jgraphics.geometry;
+package com.mhschmieder.jgraphics.shape;
 
 import java.awt.Point;
 import java.awt.Rectangle;
