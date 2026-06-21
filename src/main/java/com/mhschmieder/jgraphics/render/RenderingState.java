@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020, 2026 Mark Schmieder. All rights reserved.
+ * Copyright (c) 2020, 2024 Mark Schmieder. All rights reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,34 +28,15 @@
  *
  * Project: https://github.com/mhschmieder/jgraphics
  */
-package com.mhschmieder.jgraphics.undo;
+package com.mhschmieder.jgraphics.render;
 
-import com.mhschmieder.jcommons.util.ClientProperties;
-import com.mhschmieder.jcommons.util.GlobalUtilities;
-
-import javax.swing.undo.StateEdit;
-import javax.swing.undo.StateEditable;
-import java.util.ResourceBundle;
-
-public final class UndoableActionFactory {
-
-    /**
-     * The default constructor is disabled, as this is a static utilities class.
-     */
-    private UndoableActionFactory() {}
-
-    // NOTE: We must substitute "." for resource directory tree delimiters.
-    public static final String BUNDLE_NAME = "properties.UndoableActions";
-
-    public static StateEdit getUndoableActionInstance( final StateEditable editableObject,
-                                                       final String undoableActionName,
-                                                       final ClientProperties pClientProperties ) {
-        final ResourceBundle resourceBundle = GlobalUtilities
-                .getResourceBundle( pClientProperties, BUNDLE_NAME, false );
-
-        final String presentationName = UndoableActionUtilities
-                .getUndoableActionPresentationName( undoableActionName, resourceBundle );
-        return new StateEdit( editableObject, presentationName );
-    }
-
+/**
+ * Enumeration of rendering state, to differentiate between inactive (the state
+ * before started and/or after the finished state is handled), started, active,
+ * canceled , and finished. The Canceled state can result from a progress
+ * monitor Cancel button or programmatically based on various conditions that
+ * arise during graphics or image rendering.
+ */
+public enum RenderingState {
+    INACTIVE, STARTED, ACTIVE, CANCELED, FINISHED
 }

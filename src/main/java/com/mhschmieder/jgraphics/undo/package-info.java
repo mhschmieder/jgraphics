@@ -21,12 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * This file is part of the OfficeToolkit Library
+ * This file is part of the jgraphics Library
  *
- * You should have received a copy of the MIT License along with the
- * OfficeToolkit Library. If not, see <https://opensource.org/licenses/MIT>.
+ * You should have received a copy of the MIT License along with the jgraphics
+ * Library. If not, see <https://opensource.org/licenses/MIT>.
  *
- * Project: https://github.com/mhschmieder/officetoolkit
+ * Project: https://github.com/mhschmieder/jgraphics
  */
 /**
  * This package is for utilities and resources related to Graphics Undo/Redo.

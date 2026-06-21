@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020, 2026 Mark Schmieder. All rights reserved.
+ * Copyright (c) 2024, 2026 Mark Schmieder. All rights reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,34 +28,19 @@
  *
  * Project: https://github.com/mhschmieder/jgraphics
  */
-package com.mhschmieder.jgraphics.undo;
-
-import com.mhschmieder.jcommons.util.ClientProperties;
-import com.mhschmieder.jcommons.util.GlobalUtilities;
-
-import javax.swing.undo.StateEdit;
-import javax.swing.undo.StateEditable;
-import java.util.ResourceBundle;
-
-public final class UndoableActionFactory {
-
-    /**
-     * The default constructor is disabled, as this is a static utilities class.
-     */
-    private UndoableActionFactory() {}
-
-    // NOTE: We must substitute "." for resource directory tree delimiters.
-    public static final String BUNDLE_NAME = "properties.UndoableActions";
-
-    public static StateEdit getUndoableActionInstance( final StateEditable editableObject,
-                                                       final String undoableActionName,
-                                                       final ClientProperties pClientProperties ) {
-        final ResourceBundle resourceBundle = GlobalUtilities
-                .getResourceBundle( pClientProperties, BUNDLE_NAME, false );
-
-        final String presentationName = UndoableActionUtilities
-                .getUndoableActionPresentationName( undoableActionName, resourceBundle );
-        return new StateEdit( editableObject, presentationName );
-    }
-
+module jgraphics {
+    exports com.mhschmieder.jgraphics;
+    exports com.mhschmieder.jgraphics.color;
+    exports com.mhschmieder.jgraphics.font;
+    exports com.mhschmieder.jgraphics.image;
+    exports com.mhschmieder.jgraphics.input;
+    exports com.mhschmieder.jgraphics.print;
+    exports com.mhschmieder.jgraphics.render;
+    exports com.mhschmieder.jgraphics.shape;
+    exports com.mhschmieder.jgraphics.text;
+    exports com.mhschmieder.jgraphics.undo;
+    requires commons.math3;
+    requires java.desktop;
+    requires jcommons;
+    requires jphsd.glf;
 }

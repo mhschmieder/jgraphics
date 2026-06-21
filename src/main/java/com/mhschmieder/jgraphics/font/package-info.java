@@ -21,16 +21,16 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * This file is part of the GraphicsToolkit Library
+ * This file is part of the jgraphics Library
  *
- * You should have received a copy of the MIT License along with the
- * GraphicsToolkit Library. If not, see <https://opensource.org/licenses/MIT>.
+ * You should have received a copy of the MIT License along with the jgraphics
+ * Library. If not, see <https://opensource.org/licenses/MIT>.
  *
- * Project: https://github.com/mhschmieder/graphicstoolkit
+ * Project: https://github.com/mhschmieder/jgraphics
  */
 /**
- * This package contains the GraphicsToolkit Library's font utility classes
- * that are dependent on Graphics2D's Font sub-packages.
+ * This package contains the jgraphics Library's font utility classes that are
+ * dependent on Graphics2D's Font sub-packages.
  *
  * @version 1.0
  *

@@ -1,7 +1,7 @@
 /*
  * MIT License
  *
- * Copyright (c) 2020, 2026 Mark Schmieder. All rights reserved.
+ * Copyright (c) 2025, 2026 Mark Schmieder. All rights reserved.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -28,34 +28,15 @@
  *
  * Project: https://github.com/mhschmieder/jgraphics
  */
-package com.mhschmieder.jgraphics.undo;
+package com.mhschmieder.jgraphics.input;
 
-import com.mhschmieder.jcommons.util.ClientProperties;
-import com.mhschmieder.jcommons.util.GlobalUtilities;
-
-import javax.swing.undo.StateEdit;
-import javax.swing.undo.StateEditable;
-import java.util.ResourceBundle;
-
-public final class UndoableActionFactory {
-
-    /**
-     * The default constructor is disabled, as this is a static utilities class.
-     */
-    private UndoableActionFactory() {}
-
-    // NOTE: We must substitute "." for resource directory tree delimiters.
-    public static final String BUNDLE_NAME = "properties.UndoableActions";
-
-    public static StateEdit getUndoableActionInstance( final StateEditable editableObject,
-                                                       final String undoableActionName,
-                                                       final ClientProperties pClientProperties ) {
-        final ResourceBundle resourceBundle = GlobalUtilities
-                .getResourceBundle( pClientProperties, BUNDLE_NAME, false );
-
-        final String presentationName = UndoableActionUtilities
-                .getUndoableActionPresentationName( undoableActionName, resourceBundle );
-        return new StateEdit( editableObject, presentationName );
-    }
-
+/**
+ * Enumeration of a flexible set of mouse selection modes for placing objects.
+ */
+public enum MouseSelectionMode {
+    OFF, // no mouse selection mode active
+    BY_POINT, // single point selection mode for placing individual objects
+    BY_RECTANGLE,  // rectangle selection mode for placing multiple objects
+    BY_CIRCLE, // radial selection mode for placing multiple objects
+    BY_POLYGON; // boundary selection mode for placing multiple objects
 }

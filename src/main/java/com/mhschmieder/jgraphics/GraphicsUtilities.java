@@ -21,12 +21,12 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  *
- * This file is part of the GraphicsToolkit Library
+ * This file is part of the jgraphics Library
  *
- * You should have received a copy of the MIT License along with the
- * GraphicsToolkit Library. If not, see <https://opensource.org/licenses/MIT>.
+ * You should have received a copy of the MIT License along with the jgraphics
+ * Library. If not, see <https://opensource.org/licenses/MIT>.
  *
- * Project: https://github.com/mhschmieder/graphicstoolkit
+ * Project: https://github.com/mhschmieder/jgraphics
  */
 package com.mhschmieder.jgraphics;
 
@@ -166,10 +166,11 @@ public final class GraphicsUtilities {
      *
      * @since 1.0
      */
-    public static double calculateSourceToDestinationScaleFactor( final double sourceWidth,
-                                                                  final double sourceHeight,
-                                                                  final double destinationWidth,
-                                                                  final double destinationHeight ) {
+    public static double calculateSourceToDestinationScaleFactor(
+            final double sourceWidth,
+            final double sourceHeight,
+            final double destinationWidth,
+            final double destinationHeight ) {
         // Find the smallest of the initial source to destination scale factors
         // for width and height and use it for both, to avoid clipping and
         // distorting (stretching) of either dimension.
