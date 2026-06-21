@@ -42,5 +42,6 @@ module jgraphics {
     requires commons.math3;
     requires java.desktop;
     requires jcommons;
+    requires jmath;
     requires jphsd.glf;
 }
