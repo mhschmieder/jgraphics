@@ -68,10 +68,11 @@ public final class FontUtilities {
      * Java libraries for various graphics output formats) that the fractional
      * metrics hints are required for accuracy (though not until Java 1.6).
      */
-    public static final FontRenderContext FONT_RENDER_CONTEXT_FOR_VECTORIZATION =
-                                                                                new FontRenderContext( null,
-                                                                                                       false,
-                                                                                                       true );
+    public static final FontRenderContext FONT_RENDER_CONTEXT_FOR_VECTORIZATION
+            = new FontRenderContext(
+                    null,
+            false,
+            true );
 
     /**
      * Returns the {@link FontRenderContext} used for measuring text when
@@ -103,9 +104,7 @@ public final class FontUtilities {
         final BufferedImage image = new BufferedImage( 1, 1, BufferedImage.TYPE_INT_RGB );
         final Graphics2D graphics = image.createGraphics();
 
-        final FontMetrics fontMetrics = graphics.getFontMetrics( fontToMeasure );
-
-        return fontMetrics;
+        return graphics.getFontMetrics( fontToMeasure );
     }
 
     /**
@@ -123,13 +122,12 @@ public final class FontUtilities {
      *
      * @since 1.0
      */
-    public static AttributedCharacterIterator getAttributeCharacterIterator( final String str,
-                                                                             final Font font ) {
+    public static AttributedCharacterIterator getAttributeCharacterIterator(
+            final String str,
+            final Font font ) {
         final AttributedString attributedString = new AttributedString( str );
         AttributedTextUtilities.copyTextAttributes( font, attributedString, 0, str.length() );
-        final AttributedCharacterIterator attributedCharacterIterator = attributedString
-                .getIterator();
-        return attributedCharacterIterator;
+        return attributedString.getIterator();
     }
 
     /**
@@ -225,9 +223,6 @@ public final class FontUtilities {
         graphicsContext.setFont( fontToUse );
 
         // Measure the Font Metrics for the newly chosen Font.
-        final FontMetrics fontMetrics = graphicsContext.getFontMetrics( fontToUse );
-
-        return fontMetrics;
+        return graphicsContext.getFontMetrics( fontToUse );
     }
-
 }
