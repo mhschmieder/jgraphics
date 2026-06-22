@@ -30,8 +30,6 @@
  */
 package com.mhschmieder.jgraphics.shape;
 
-import com.mhschmieder.jgraphics.DrawMode;
-
 import java.awt.Color;
 import java.awt.Shape;
 import java.awt.geom.AffineTransform;

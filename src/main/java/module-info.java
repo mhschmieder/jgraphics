@@ -29,7 +29,6 @@
  * Project: https://github.com/mhschmieder/jgraphics
  */
 module jgraphics {
-    exports com.mhschmieder.jgraphics;
     exports com.mhschmieder.jgraphics.color;
     exports com.mhschmieder.jgraphics.font;
     exports com.mhschmieder.jgraphics.image;
@@ -39,6 +38,7 @@ module jgraphics {
     exports com.mhschmieder.jgraphics.shape;
     exports com.mhschmieder.jgraphics.text;
     exports com.mhschmieder.jgraphics.undo;
+    exports com.mhschmieder.jgraphics.util;
     requires commons.math3;
     requires java.desktop;
     requires jcommons;

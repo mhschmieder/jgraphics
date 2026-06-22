@@ -28,7 +28,7 @@
  *
  * Project: https://github.com/mhschmieder/jgraphics
  */
-package com.mhschmieder.jgraphics;
+package com.mhschmieder.jgraphics.shape;
 
 import java.util.Locale;
 

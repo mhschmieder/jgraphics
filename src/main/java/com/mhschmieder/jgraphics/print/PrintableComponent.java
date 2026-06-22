@@ -30,7 +30,7 @@
  */
 package com.mhschmieder.jgraphics.print;
 
-import com.mhschmieder.jgraphics.GraphicsUtilities;
+import com.mhschmieder.jgraphics.util.GraphicsUtilities;
 import org.apache.commons.math3.util.FastMath;
 
 import javax.swing.JComponent;
