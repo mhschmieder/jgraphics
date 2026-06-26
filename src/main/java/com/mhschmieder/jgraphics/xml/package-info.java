@@ -28,23 +28,7 @@
  *
  * Project: https://github.com/mhschmieder/jgraphics
  */
-module jgraphics {
-    exports com.mhschmieder.jgraphics.color;
-    exports com.mhschmieder.jgraphics.font;
-    exports com.mhschmieder.jgraphics.image;
-    exports com.mhschmieder.jgraphics.input;
-    exports com.mhschmieder.jgraphics.print;
-    exports com.mhschmieder.jgraphics.render;
-    exports com.mhschmieder.jgraphics.shape;
-    exports com.mhschmieder.jgraphics.text;
-    exports com.mhschmieder.jgraphics.undo;
-    exports com.mhschmieder.jgraphics.util;
-    exports com.mhschmieder.jgraphics.xml;
-    requires commons.math3;
-    requires java.desktop;
-    requires java.xml;
-    requires jcommons;
-    requires jmath;
-    requires jphsd.glf;
-    requires org.apache.commons.io;
-}
+/**
+ * This package is for classes and utilities related to Java XML functionality.
+ */
+package com.mhschmieder.jgraphics.xml;
