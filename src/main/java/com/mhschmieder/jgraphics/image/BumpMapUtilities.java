@@ -31,11 +31,11 @@
 package com.mhschmieder.jgraphics.image;
 
 import com.mhschmieder.jmath.geometry.euclidean.LightSourceDirection;
-import org.apache.commons.math3.util.FastMath;
 import com.sun.glf.goodies.DirectionalLight;
 import com.sun.glf.goodies.ElevationMap;
 import com.sun.glf.goodies.LightOp;
 import com.sun.glf.goodies.LitSurface;
+import org.apache.commons.math3.util.FastMath;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;
