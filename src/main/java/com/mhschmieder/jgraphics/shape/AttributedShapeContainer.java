@@ -48,7 +48,7 @@ import java.util.ArrayList;
 public final class AttributedShapeContainer {
 
     /**
-     * Declare the list of Shapes for this Geometry container.
+     * Declare the clonable ArrayList of Shapes for this Geometry container.
      */
     private final ArrayList< AttributedShape > shapes2D;
 
@@ -115,7 +115,8 @@ public final class AttributedShapeContainer {
     @Override
     public Object clone() {
         try {
-            final AttributedShapeContainer geoms = ( AttributedShapeContainer ) super.clone();
+            final AttributedShapeContainer geoms = ( AttributedShapeContainer )
+                    super.clone();
             geoms.shapes2D.clone();
             return geoms;
         }
@@ -135,8 +136,8 @@ public final class AttributedShapeContainer {
      * clients will assume that each member of the collection is unique and not
      * repeated, as well as being ordered.
      *
-     * @return The {@link ArrayList} of {@link AttributedShape} objects in this
-     *         container
+     * @return The clonable {@link ArrayList} of {@link AttributedShape} objects
+     * in this container
      *
      * @since 1.0
      */
