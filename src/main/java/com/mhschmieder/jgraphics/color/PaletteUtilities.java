@@ -96,13 +96,15 @@ public final class PaletteUtilities {
         colorValue = PALETTE_COLORS_MAXIMUM;
         colorIndexMinimum = colorIndexMaximum + 1;
         colorIndexMaximum = ( int ) FastMath.round( 5.0d * 0.125d * numberOfJetPaletteColors ) - 1;
-        for ( int i =
-                    0, colorIndex =
-                                  colorIndexMinimum; colorIndex <= colorIndexMaximum; colorIndex++ ) {
-            colorValue = FastMath.min( PALETTE_COLORS_MAXIMUM,
-                                         FastMath.max( PALETTE_COLORS_MINIMUM,
-                                             PALETTE_COLORS_MAXIMUM
-                                                     - ( int ) FastMath.round( i * colorIncrement ) ) );
+        for ( int i = 0,
+              colorIndex = colorIndexMinimum;
+              colorIndex <= colorIndexMaximum;
+              colorIndex++ ) {
+            colorValue = Math.clamp(
+                    PALETTE_COLORS_MAXIMUM
+                            - ( int ) FastMath.round( i * colorIncrement ),
+                    PALETTE_COLORS_MINIMUM,
+                    PALETTE_COLORS_MAXIMUM );
             jetPalette[ colorIndex ] = colorValue;
             i++;
         }
@@ -144,16 +146,16 @@ public final class PaletteUtilities {
             jetPalette[ colorIndex ] += ( colorValue << 8 );
         }
 
-        colorValue = PALETTE_COLORS_MAXIMUM;
         colorIndexMinimum = colorIndexMaximum + 1;
         colorIndexMaximum = ( int ) FastMath.round( 7.0d * 0.125d * numberOfJetPaletteColors ) - 1;
-        for ( int i =
-                    0, colorIndex =
-                                  colorIndexMinimum; colorIndex <= colorIndexMaximum; colorIndex++ ) {
-            colorValue = FastMath.min( PALETTE_COLORS_MAXIMUM,
-                                         FastMath.max( PALETTE_COLORS_MINIMUM,
-                                             PALETTE_COLORS_MAXIMUM
-                                                     - ( int ) FastMath.round( i * colorIncrement ) ) );
+        for ( int i = 0,
+              colorIndex = colorIndexMinimum;
+              colorIndex <= colorIndexMaximum; colorIndex++ ) {
+            colorValue = Math.clamp(
+                    PALETTE_COLORS_MAXIMUM
+                            - ( int ) FastMath.round( i * colorIncrement ),
+                    PALETTE_COLORS_MINIMUM,
+                    PALETTE_COLORS_MAXIMUM );
             jetPalette[ colorIndex ] += ( colorValue << 8 );
             i++;
         }
@@ -175,15 +177,17 @@ public final class PaletteUtilities {
             jetPalette[ colorIndex ] += ( colorValue << 16 );
         }
 
-        colorValue = PALETTE_COLORS_MINIMUM;
         colorIndexMinimum = colorIndexMaximum + 1;
-        colorIndexMaximum = ( int ) FastMath.round( 5.0d * 0.125d * numberOfJetPaletteColors ) - 1;
-        for ( int i =
-                    0, colorIndex =
-                                  colorIndexMinimum; colorIndex <= colorIndexMaximum; colorIndex++ ) {
-            colorValue = FastMath
-                    .min( PALETTE_COLORS_MAXIMUM,
-                          PALETTE_COLORS_MINIMUM + ( int ) FastMath.round( i * colorIncrement ) );
+        colorIndexMaximum = ( int ) FastMath.round(
+                5.0d * 0.125d * numberOfJetPaletteColors ) - 1;
+        for ( int i = 0,
+              colorIndex = colorIndexMinimum;
+              colorIndex <= colorIndexMaximum; colorIndex++ ) {
+            colorValue = Math.clamp(
+                    PALETTE_COLORS_MINIMUM
+                            + ( int ) FastMath.round( i * colorIncrement ),
+                    PALETTE_COLORS_MINIMUM,
+                    PALETTE_COLORS_MAXIMUM );
             jetPalette[ colorIndex ] += ( colorValue << 16 );
             i++;
         }
@@ -195,16 +199,16 @@ public final class PaletteUtilities {
             jetPalette[ colorIndex ] += ( colorValue << 16 );
         }
 
-        colorValue = PALETTE_COLORS_MAXIMUM;
         colorIndexMinimum = colorIndexMaximum + 1;
         colorIndexMaximum = numberOfJetPaletteColors - 1;
-        for ( int i =
-                    0, colorIndex =
-                                  colorIndexMinimum; colorIndex <= colorIndexMaximum; colorIndex++ ) {
-            colorValue = FastMath.min( PALETTE_COLORS_MAXIMUM,
-                                         FastMath.max( PALETTE_COLORS_MINIMUM,
-                                             PALETTE_COLORS_MAXIMUM
-                                                     - ( int ) FastMath.round( i * colorIncrement ) ) );
+        for ( int i = 0,
+              colorIndex = colorIndexMinimum;
+              colorIndex <= colorIndexMaximum; colorIndex++ ) {
+            colorValue = Math.clamp(
+                    PALETTE_COLORS_MAXIMUM
+                            - ( int ) FastMath.round( i * colorIncrement ),
+                    PALETTE_COLORS_MINIMUM,
+                    PALETTE_COLORS_MAXIMUM );
             jetPalette[ colorIndex ] += ( colorValue << 16 );
             i++;
         }

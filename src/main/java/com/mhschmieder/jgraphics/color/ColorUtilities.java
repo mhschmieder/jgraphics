@@ -672,9 +672,7 @@ public final class ColorUtilities {
         final float grayValue = ( 0.2989f * rgbRed ) + ( 0.587f * rgbGreen ) + ( 0.114f * rgbBlue );
 
         // Avoid overflow beyond the allowed floating-point range.
-        final float grayValueAdjusted = FastMath.min( grayValue, 1.0f );
-
-        return grayValueAdjusted;
+        return FastMath.min( grayValue, 1.0f );
     }
 
     /**
