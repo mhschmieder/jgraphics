@@ -39,42 +39,38 @@ package com.mhschmieder.jgraphics.print;
  * graphics export formats, such as EPS, SVG, PDF, only North American Letter
  * dimensions are implemented at this time, as some formats only support that.
  *
- * @version 1.0
- *
  * @author Mark Schmieder
+ * @version 1.0
  */
 public final class PaperConstants {
 
     /**
-     * The default constructor is disabled, as this is a static constants class.
-     */
-    private PaperConstants() {}
-
-    /**
      * The standard units for printing are points, defined as 1/72 inch.
      */
-    public static final float INCHES_TO_POINTS_RATIO  = 72f;
-
+    public static final float INCHES_TO_POINTS_RATIO = 72f;
     /**
      * North American Letter Size paper is defined as 8.5 inches wide.
      */
-    public static final float NA_LETTER_WIDTH_INCHES  = 8.5f;
-
+    public static final float NA_LETTER_WIDTH_INCHES = 8.5f;
     /**
      * North American Letter Size paper is defined as 11 inches tall.
      */
     public static final float NA_LETTER_HEIGHT_INCHES = 11f;
-
     /**
      * North American Letter Size width in points is needed for printing.
      */
-    public static final float NA_LETTER_WIDTH_POINTS  = INCHES_TO_POINTS_RATIO
-            * NA_LETTER_WIDTH_INCHES;
-
+    public static final float NA_LETTER_WIDTH_POINTS = INCHES_TO_POINTS_RATIO
+                                                       * NA_LETTER_WIDTH_INCHES;
     /**
      * North American Letter Size height in points is needed for printing.
      */
     public static final float NA_LETTER_HEIGHT_POINTS = INCHES_TO_POINTS_RATIO
-            * NA_LETTER_HEIGHT_INCHES;
+                                                        * NA_LETTER_HEIGHT_INCHES;
 
+    /**
+     * The default constructor is disabled, as this is a static constants
+     * class.
+     */
+    private PaperConstants() {
+    }
 }

@@ -45,31 +45,27 @@ import java.awt.Graphics2D;
  * good idea to anticipate future needs and/or downstream clients and their
  * extra functionality in their class derivations.
  *
- * @version 1.0
- *
  * @author Mark Schmieder
+ * @version 1.0
  */
 public interface ZBufferManager {
 
     /**
      * Creates an off-screen z-buffer to double-buffer the graphics image.
      *
-     * @param graphicsContext
-     *            A Graphics Context reference
+     * @param graphicsContext A Graphics Context reference
      * @return A Graphics Context to use for the off-screen z-buffer
-     *
      * @since 1.0
      */
     Graphics2D createGraphics( final Graphics graphicsContext );
 
     /**
-     * This method either shows the new background image, or re-displays the
-     * old background image, depending on whether the cached image is null or
-     * not. If null, show the new background image, otherwise show then old.
+     * This method either shows the new background image, or re-displays the old
+     * background image, depending on whether the cached image is null or not.
+     * If null, show the new background image, otherwise show then old.
      *
-     * @param graphicsContext
-     *            A Graphics Context to use for showing the background image
-     *
+     * @param graphicsContext A Graphics Context to use for showing the
+     *                        background image
      * @since 1.0
      */
     void showBackgroundImage( final Graphics graphicsContext );
@@ -85,11 +81,9 @@ public interface ZBufferManager {
      * Initializes the off-screen canvas associated with a {@link Graphics2D}
      * Graphics Context, for future rendering.
      *
-     * @param graphicsContext
-     *            The Graphics Context to initialize for off-screen rendering
-     *
+     * @param graphicsContext The Graphics Context to initialize for off-screen
+     *                        rendering
      * @since 1.0
      */
     void initializeOffScreenCanvas( final Graphics2D graphicsContext );
-
 }

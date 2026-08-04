@@ -71,6 +71,14 @@ public class RenderingProgress {
         update( RenderingState.INACTIVE, 0L, 1L );
     }
 
+    public void update( final RenderingState pRenderingState,
+                        final long pCurrentStep,
+                        final long pNumberOfSteps ) {
+        renderingState = pRenderingState;
+        currentStep = pCurrentStep;
+        numberOfSteps = pNumberOfSteps;
+    }
+
     public void start( final long pNumberOfSteps ) {
         update( RenderingState.STARTED, 0L, pNumberOfSteps );
     }
@@ -78,13 +86,5 @@ public class RenderingProgress {
     public void finish() {
         // NOTE: Number of steps is defaulted to 1 to avoid divide by zero.
         update( RenderingState.FINISHED, 0L, 1L );
-    }
-
-    public void update( final RenderingState pRenderingState,
-                        final long pCurrentStep,
-                        final long pNumberOfSteps ) {
-        renderingState = pRenderingState;
-        currentStep = pCurrentStep;
-        numberOfSteps = pNumberOfSteps;
     }
 }

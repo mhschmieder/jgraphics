@@ -38,12 +38,12 @@ import com.mhschmieder.jcommons.lang.Labeled;
  * An enumeration of data smoothing choices, relating. to interpolation, screen
  * rendering hints, and sometimes more obscure uses
  */
-public enum DataSmoothing implements Indexed< DataSmoothing >,
-        Labeled< DataSmoothing > {
+public enum DataSmoothing
+        implements Indexed< DataSmoothing >, Labeled< DataSmoothing > {
     NONE( 3, "No Smoothing, 1:1 Image Scaling" ),
-    MODEL_SPECIFIC(  0, "No Smoothing, 1:n Image Scaling" ),
-    IMAGE_BILINEAR(  1, "Bilinear Image Interpolation" ),
-    IMAGE_BICUBIC(  2, "Bicubic Image Interpolation" );
+    MODEL_SPECIFIC( 0, "No Smoothing, 1:n Image Scaling" ),
+    IMAGE_BILINEAR( 1, "Bilinear Image Interpolation" ),
+    IMAGE_BICUBIC( 2, "Bicubic Image Interpolation" );
 
     private int index;
     private String label;
@@ -54,6 +54,10 @@ public enum DataSmoothing implements Indexed< DataSmoothing >,
         label = pLabel;
     }
 
+    public static DataSmoothing defaultValue() {
+        return NONE;
+    }
+
     @Override
     public int index() {
         return index;
@@ -61,22 +65,8 @@ public enum DataSmoothing implements Indexed< DataSmoothing >,
 
     @Override
     public DataSmoothing valueOfIndex( final int pIndex ) {
-        return ( DataSmoothing ) EnumUtilities.getIndexedEnumFromIndex(
-                pIndex, values() );
-    }
-
-    public String label() {
-        return label;
-    }
-
-    @Override
-    public DataSmoothing valueOfLabel( final String text ) {
-        return ( DataSmoothing ) EnumUtilities.getLabeledEnumFromLabel(
-                text, values() );
-    }
-
-    public static DataSmoothing defaultValue() {
-        return NONE;
+        return ( DataSmoothing ) EnumUtilities.getIndexedEnumFromIndex( pIndex,
+                                                                        values() );
     }
 
     @Override
@@ -85,5 +75,15 @@ public enum DataSmoothing implements Indexed< DataSmoothing >,
         //  its custom label form when a Combo Box is hosted by a Table Cell. It
         //  also addresses an issue with the Jackson parser if in a JSON file.
         return label();
+    }
+
+    public String label() {
+        return label;
+    }
+
+    @Override
+    public DataSmoothing valueOfLabel( final String text ) {
+        return ( DataSmoothing ) EnumUtilities.getLabeledEnumFromLabel( text,
+                                                                        values() );
     }
 }

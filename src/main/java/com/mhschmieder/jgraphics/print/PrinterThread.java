@@ -30,24 +30,24 @@
  */
 package com.mhschmieder.jgraphics.print;
 
-import javax.print.attribute.PrintRequestAttributeSet;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
+
+import javax.print.attribute.PrintRequestAttributeSet;
 
 /**
  * {@code PrinterThread} is a specialized {@link Thread} that deals with some of
  * the details of AWT and Swing based printing.
  *
- * @version 1.0
- *
  * @author Mark Schmieder
+ * @version 1.0
  */
 public final class PrinterThread extends Thread {
 
     /**
      * The cached pre-constructed {@link PrinterJob}.
      */
-    private final PrinterJob               cachedPrinterJob;
+    private final PrinterJob cachedPrinterJob;
 
     /**
      * The cached pre-constructed {@link PrintRequestAttributeSet}.
@@ -59,13 +59,11 @@ public final class PrinterThread extends Thread {
     /**
      * This is the default constructor for Printer Threads.
      *
-     * @param printerJob
-     *            The pre-constructed {@link PrinterJob} to use for this
-     *            {@code PrinterThread}
-     * @param requestedPrintingAttributes
-     *            The requested {@link PrintRequestAttributeSet} to apply to
-     *            each Print action
-     *
+     * @param printerJob                  The pre-constructed {@link PrinterJob}
+     *                                    to use for this {@code PrinterThread}
+     * @param requestedPrintingAttributes The requested
+     *                                    {@link PrintRequestAttributeSet} to
+     *                                    apply to each Print action
      * @since 1.0
      */
     public PrinterThread( final PrinterJob printerJob,
@@ -126,5 +124,4 @@ public final class PrinterThread extends Thread {
             pe.printStackTrace();
         }
     }
-
 }

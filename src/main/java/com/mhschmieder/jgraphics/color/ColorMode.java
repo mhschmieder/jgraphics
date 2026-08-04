@@ -80,7 +80,8 @@ package com.mhschmieder.jgraphics.color;
  * makes them difficult to convert to and from standard device-dependent RGB,
  * HSB (also known as HSV), or CMYK. As PostScript and most other graphics
  * output formats do not support them anyway, any conversion of these color
- * spaces are the responsibility of client applications and dedicated libraries.
+ * spaces are the responsibility of client applications and dedicated
+ * libraries.
  * <p>
  * There was an initial attempt to support both HSB and LAB, but they were both
  * backed out as neither has much utility in the context of file export vs.
@@ -89,16 +90,17 @@ package com.mhschmieder.jgraphics.color;
  * all users of this library will be producing file-based documents. There is
  * support for LAB in several AWT utility classes, but they are somewhat hidden
  * and a bit difficult to use. HSB is trivial, but maps back to RGB anyway, so
- * why bother, as the two-way conversions eventually introduce color inaccuracy?
- *
- * @see <a href=
- *      "https://en.wikipedia.org/wiki/CIELAB_color_space">https://en.wikipedia.org/wiki/CIELAB_color_space</a>
- * @see <a href=
- *      "https://en.wikipedia.org/wiki/HSL_and_HSV">https://en.wikipedia.org/wiki/HSL_and_HSV</a>
- *
- * @version 1.0
+ * why bother, as the two-way conversions eventually introduce color
+ * inaccuracy?
  *
  * @author Mark Schmieder
+ * @version 1.0
+ * @see <a href=
+ *         "https://en.wikipedia.org/wiki/CIELAB_color_space">https://en
+ *         .wikipedia.org/wiki/CIELAB_color_space</a>
+ * @see <a href=
+ *         "https://en.wikipedia.org/wiki/HSL_and_HSV">https://en.wikipedia
+ *         .org/wiki/HSL_and_HSV</a>
  */
 public enum ColorMode {
     /**
@@ -128,11 +130,9 @@ public enum ColorMode {
      * clients to deal with, so the more common RGB mode is chosen instead.
      *
      * @return The most common preferred default Color Mode, which is RGB
-     *
      * @since 1.0
      */
     public static ColorMode defaultValue() {
         return RGB;
     }
-
 }

@@ -30,32 +30,34 @@
  */
 package com.mhschmieder.jgraphics.image;
 
-import javax.imageio.ImageIO;
-import javax.imageio.ImageReader;
-import javax.imageio.ImageTypeSpecifier;
-import javax.imageio.ImageWriter;
-import javax.imageio.stream.ImageInputStream;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Iterator;
 
+import javax.imageio.ImageIO;
+import javax.imageio.ImageReader;
+import javax.imageio.ImageTypeSpecifier;
+import javax.imageio.ImageWriter;
+import javax.imageio.stream.ImageInputStream;
+
 /**
  * {@code ImageFormatUtilities} is a utility class for Graphics2D based image
  * format methods that are used to query the capabilities of the JDK that this
  * code base is built against.
  *
- * @version 1.0
- *
  * @author Mark Schmieder
+ * @version 1.0
  */
 public final class ImageFormatUtilities {
 
     /**
-     * The default constructor is disabled, as this is a static utilities class.
+     * The default constructor is disabled, as this is a static utilities
+     * class.
      */
-    private ImageFormatUtilities() {}
+    private ImageFormatUtilities() {
+    }
 
     /**
      * Returns a flag that indicates whether the supplied Image Type is
@@ -63,8 +65,8 @@ public final class ImageFormatUtilities {
      * in the invoking application's Java Virtual Machine and auxiliary
      * libraries.
      * <p>
-     * This method determines whether a specific Image Format is supported on
-     * a given {@link BufferedImage} based on heuristics in the Image I/O API.
+     * This method determines whether a specific Image Format is supported on a
+     * given {@link BufferedImage} based on heuristics in the Image I/O API.
      * <p>
      * The context is for checking ahead of time whether it will be possible to
      * write the supplied {@link BufferedImage} to the specified Image Format.
@@ -72,14 +74,12 @@ public final class ImageFormatUtilities {
      * the already-generated {@link BufferedImage} might use an Indexed Color
      * Model, which not all Image Formats can handle.
      *
-     * @param bufferedImage
-     *            The {@link BufferedImage} to use to intuit the Image Type
-     * @param imageFormatName
-     *            The Image Format name to check for support
+     * @param bufferedImage   The {@link BufferedImage} to use to intuit the
+     *                        Image Type
+     * @param imageFormatName The Image Format name to check for support
      * @return {@code true} if the specified Image Type is supported for the
      *         supplied {@link BufferedImage}, {@code false} if it is not
      *         supported
-     *
      * @since 1.0
      */
     public static boolean isImageTypeSupportedForWrite( final BufferedImage bufferedImage,
@@ -88,8 +88,10 @@ public final class ImageFormatUtilities {
             return false;
         }
 
-        final ImageTypeSpecifier type = ImageTypeSpecifier.createFromRenderedImage( bufferedImage );
-        final Iterator< ImageWriter > iter = ImageIO.getImageWriters( type, imageFormatName );
+        final ImageTypeSpecifier type
+                = ImageTypeSpecifier.createFromRenderedImage( bufferedImage );
+        final Iterator< ImageWriter > iter = ImageIO.getImageWriters( type,
+                                                                      imageFormatName );
         final boolean imageTypeSupported = iter.hasNext();
 
         return imageTypeSupported;
@@ -103,16 +105,15 @@ public final class ImageFormatUtilities {
      * This method checks a given File Extension to see if there is available
      * Image Reader support in the JVM that the application is built against.
      *
-     * @param fileExt
-     *            The File Extension to check for available Image Reader support
-     *
+     * @param fileExt The File Extension to check for available Image Reader
+     *                support
      * @return {@code true} if the specified Image File Extension can be read,
      *         {@code false} if it cannot
-     *
      * @since 1.0
      */
     public static boolean canReadImageExtension( final String fileExt ) {
-        final Iterator< ImageReader > iter = ImageIO.getImageReadersBySuffix( fileExt );
+        final Iterator< ImageReader > iter = ImageIO.getImageReadersBySuffix(
+                fileExt );
         return iter.hasNext();
     }
 
@@ -121,40 +122,38 @@ public final class ImageFormatUtilities {
      * be read (if {@code true}) or not (if {@code false}) by the invoking
      * application's Java Virtual Machine and auxiliary libraries
      * <p>
-     * This method checks a given Format name to see if there is available
-     * Image Reader support in the JDK that this code base is built against.
+     * This method checks a given Format name to see if there is available Image
+     * Reader support in the JDK that this code base is built against.
      *
-     * @param formatName
-     *            The Format Name to check for available Image Reader support
-     *
+     * @param formatName The Format Name to check for available Image Reader
+     *                   support
      * @return {@code true} if the specified Image Format Name can be read,
      *         {@code false} if it cannot
-     *
      * @since 1.0
      */
     public static boolean canReadImageFormat( final String formatName ) {
-        final Iterator< ImageReader > iter = ImageIO.getImageReadersByFormatName( formatName );
+        final Iterator< ImageReader > iter
+                = ImageIO.getImageReadersByFormatName( formatName );
         return iter.hasNext();
     }
 
     /**
-     * Returns a flag that indicates whether the supplied Image Mime Type can
-     * be read (if {@code true}) or not (if {@code false}) by the invoking
+     * Returns a flag that indicates whether the supplied Image Mime Type can be
+     * read (if {@code true}) or not (if {@code false}) by the invoking
      * application's Java Virtual Machine and auxiliary libraries
      * <p>
      * This method checks a given Mime Type to see if there is available Image
      * Reader support in the JDK that this code base is built against.
      *
-     * @param mimeType
-     *            The Mime Type to check for available Image Reader support
-     *
+     * @param mimeType The Mime Type to check for available Image Reader
+     *                 support
      * @return {@code true} if the specified Image Mime Type can be read,
      *         {@code false} if it cannot
-     *
      * @since 1.0
      */
     public static boolean canReadImageMimeType( final String mimeType ) {
-        final Iterator< ImageReader > iter = ImageIO.getImageReadersByMIMEType( mimeType );
+        final Iterator< ImageReader > iter = ImageIO.getImageReadersByMIMEType(
+                mimeType );
         return iter.hasNext();
     }
 
@@ -166,16 +165,15 @@ public final class ImageFormatUtilities {
      * This method checks a given File Extension to see if there is available
      * Image Writer support in the JDK that this code base is built against.
      *
-     * @param fileExt
-     *            The File Extension to check for available Image Writer support
-     *
+     * @param fileExt The File Extension to check for available Image Writer
+     *                support
      * @return {@code true} if the specified image file extension can be
      *         written, {@code false} if it cannot
-     *
      * @since 1.0
      */
     public static boolean canWriteImageExtension( final String fileExt ) {
-        final Iterator< ImageWriter > iter = ImageIO.getImageWritersBySuffix( fileExt );
+        final Iterator< ImageWriter > iter = ImageIO.getImageWritersBySuffix(
+                fileExt );
         return iter.hasNext();
     }
 
@@ -184,41 +182,38 @@ public final class ImageFormatUtilities {
      * be written (if {@code true}) or not (if {@code false}) by the invoking
      * application's Java Virtual Machine and auxiliary libraries
      * <p>
-     * This method checks a given Format name to see if there is available
-     * Image Writer support in the JDK that this code base is built against.
+     * This method checks a given Format name to see if there is available Image
+     * Writer support in the JDK that this code base is built against.
      *
-     * @param formatName
-     *            The Format Name to check for available Image Writer support
-     *
+     * @param formatName The Format Name to check for available Image Writer
+     *                   support
      * @return {@code true} if the specified Image Format Name can be written,
      *         {@code false} if it cannot
-     *
      * @since 1.0
      */
     public static boolean canWriteImageFormat( final String formatName ) {
-        final Iterator< ImageWriter > iter = ImageIO.getImageWritersByFormatName( formatName );
+        final Iterator< ImageWriter > iter
+                = ImageIO.getImageWritersByFormatName( formatName );
         return iter.hasNext();
     }
 
     /**
      * Returns a flag that indicates whether the supplied Image Mime Type can be
      * written (if {@code true}) or not (if {@code false}) by the invoking
-     * application's Java
-     * Virtual Machine and auxiliary libraries
+     * application's Java Virtual Machine and auxiliary libraries
      * <p>
      * This method checks a given Mime Type to see if there is available Image
      * Writer support in the JDK that this code base is built against.
      *
-     * @param mimeType
-     *            The Mime Type to check for available Image Writer support
-     *
+     * @param mimeType The Mime Type to check for available Image Writer
+     *                 support
      * @return {@code true} if the specified Image Mime Type can be written,
      *         {@code false} if it cannot
-     *
      * @since 1.0
      */
     public static boolean canWriteImageMimeType( final String mimeType ) {
-        final Iterator< ImageWriter > iter = ImageIO.getImageWritersByMIMEType( mimeType );
+        final Iterator< ImageWriter > iter = ImageIO.getImageWritersByMIMEType(
+                mimeType );
         return iter.hasNext();
     }
 
@@ -229,15 +224,64 @@ public final class ImageFormatUtilities {
      * the supplied file correspond to a known image format, and if so, returns
      * the first one in the list of image readers that can handle the format.
      *
-     * @param file
-     *            The {@link File} corresponding to the image
+     * @param file The {@link File} corresponding to the image
      * @return The format name of the image in the supplied file, or
      *         {@code null} if the format is not known
-     *
      * @since 1.0
      */
     public static String getImageFormatForFile( final File file ) {
         return getImageFormatName( file );
+    }
+
+    /**
+     * Returns the Image Format Name associated with the supplied Object.
+     * <p>
+     * This method uses the Image I/O API to determine whether the contents of a
+     * supplied File or Input Stream correspond to a known Image Format, and if
+     * so, returns the first one in the list of Image Readers that can handle
+     * the format.
+     * <p>
+     * Unfortunately the method argument has to be a generic object as that is
+     * the only common base class for Files and Input Streams.
+     * <p>
+     * The method is declared as private, to avoid user errors, for reasons
+     * explained above. This is mostly a utility methods used by the publicly
+     * exposed methods in order to avoid copy/paste coding errors and divergent
+     * code enhancement paths.
+     *
+     * @param object The object must be either a File or an Input Stream
+     *               corresponding to an image
+     * @return The format name of the image in the File or Input Stream, or
+     *         {@code null} if the format is not known or the object does not
+     *         correspond to an Image File or Stream
+     * @since 1.0
+     */
+    private static String getImageFormatName( final Object object ) {
+        // Create an image input stream on the image.
+        try ( final ImageInputStream imageInputStream =
+                      ImageIO.createImageInputStream(
+                object ) ) {
+            // Find all image readers that recognize the image format.
+            final Iterator< ImageReader > iter = ImageIO.getImageReaders(
+                    imageInputStream );
+
+            // Use the first available image reader, if any are present.
+            final ImageReader reader = iter.hasNext()
+                                       ? iter.next()
+                                       : null;
+
+            // Return the image format name, if present.
+            return ( reader != null )
+                   ? reader.getFormatName()
+                   : null;
+        }
+        catch ( final NullPointerException | IllegalArgumentException |
+                      IOException e ) {
+            e.printStackTrace();
+        }
+
+        // The image could not be read.
+        return null;
     }
 
     /**
@@ -249,60 +293,12 @@ public final class ImageFormatUtilities {
      * returns the first one in the list of image readers that can handle the
      * format.
      *
-     * @param inputStream
-     *            The {@link InputStream} corresponding to the image
+     * @param inputStream The {@link InputStream} corresponding to the image
      * @return The format name of the image in the supplied input stream, or
      *         {@code null} if the format is not known
-     *
      * @since 1.0
      */
     public static String getImageFormatForInputStream( final InputStream inputStream ) {
         return getImageFormatName( inputStream );
     }
-
-    /**
-     * Returns the Image Format Name associated with the supplied Object.
-     * <p>
-     * This method uses the Image I/O API to determine whether the contents of
-     * a supplied File or Input Stream correspond to a known Image Format, and
-     * if so, returns the first one in the list of Image Readers that can handle
-     * the format.
-     * <p>
-     * Unfortunately the method argument has to be a generic object as that is
-     * the only common base class for Files and Input Streams.
-     * <p>
-     * The method is declared as private, to avoid user errors, for reasons
-     * explained above. This is mostly a utility methods used by the publicly
-     * exposed methods in order to avoid copy/paste coding errors and divergent
-     * code enhancement paths.
-     *
-     * @param object
-     *            The object must be either a File or an Input Stream
-     *            corresponding to an image
-     * @return The format name of the image in the File or Input Stream, or
-     *         {@code null} if the format is not known or the object does not
-     *         correspond to an Image File or Stream
-     *
-     * @since 1.0
-     */
-    private static String getImageFormatName( final Object object ) {
-        // Create an image input stream on the image.
-        try ( final ImageInputStream imageInputStream = ImageIO.createImageInputStream( object ) ) {
-            // Find all image readers that recognize the image format.
-            final Iterator< ImageReader > iter = ImageIO.getImageReaders( imageInputStream );
-
-            // Use the first available image reader, if any are present.
-            final ImageReader reader = iter.hasNext() ? iter.next() : null;
-
-            // Return the image format name, if present.
-            return ( reader != null ) ? reader.getFormatName() : null;
-        }
-        catch ( final NullPointerException | IllegalArgumentException | IOException e ) {
-            e.printStackTrace();
-        }
-
-        // The image could not be read.
-        return null;
-    }
-
 }

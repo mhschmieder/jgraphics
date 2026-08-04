@@ -39,9 +39,8 @@ import java.awt.RenderingHints;
  * {@code HighlightStroke} is a custom {@link BasicStroke} used for highlighting
  * on the Graphics2D canvas; especially for indicating selected shapes.
  *
- * @version 1.0
- *
  * @author Mark Schmieder
+ * @version 1.0
  */
 public final class HighlightStroke extends BasicStroke {
 
@@ -68,11 +67,8 @@ public final class HighlightStroke extends BasicStroke {
      * there may be side effects that cause a solid line, even if anti-aliasing
      * is turned on in the {@link RenderingHints}. No dash phase is used.
      *
-     * @param basicStroke
-     *            The {@link BasicStroke} to use as a reference for the line
-     *            width to use for highlighting
-     *
-     * @version 1.0
+     * @param basicStroke The {@link BasicStroke} to use as a reference for the
+     *                    line width to use for highlighting
      */
     public HighlightStroke( final BasicStroke basicStroke ) {
         super( FastMath.max( basicStroke.getLineWidth(), 1.01f ),
@@ -82,5 +78,4 @@ public final class HighlightStroke extends BasicStroke {
                HIGHLIGHT_DASH_PATTERN,
                0f );
     }
-
 }

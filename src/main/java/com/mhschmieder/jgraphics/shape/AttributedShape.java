@@ -52,26 +52,25 @@ import java.awt.geom.AffineTransform;
  * graphics from file formats such as AutoCAD DXF. If the need arises, we can
  * add getter and setter methods, and consider making the data private.
  *
- * @version 1.0
- *
  * @author Mark Schmieder
+ * @version 1.0
  */
 public class AttributedShape {
 
     /**
      * The {@link Shape} that is modified by the extra attributes.
      */
-    public final Shape           shape;
+    public final Shape shape;
 
     /**
      * The pen color to use for drawing or filling this shape.
      */
-    public final Color           penColor;
+    public final Color penColor;
 
     /**
      * The {@link DrawMode} to use for rendering this shape (Stroke or Fill).
      */
-    public final DrawMode        drawMode;
+    public final DrawMode drawMode;
 
     /**
      * The {@link AffineTransform} to apply to the shape to place, scale, and
@@ -86,9 +85,7 @@ public class AttributedShape {
      * {@link Shape} needs to be used alongside ones that are attributed, or has
      * default attribute values.
      *
-     * @param unattributedShape
-     *            The original unattributed {@link Shape}
-     *
+     * @param unattributedShape The original unattributed {@link Shape}
      * @since 1.0
      */
     public AttributedShape( final Shape unattributedShape ) {
@@ -99,14 +96,11 @@ public class AttributedShape {
      * This is the partially specified constructor, to use when the
      * {@link Shape} has known non-default attributes and is pre-transformed.
      *
-     * @param unattributedShape
-     *            The original unattributed {@link Shape}
-     * @param color
-     *            The {@link Color} to assign to the pen (foreground)
-     * @param parentDrawMode
-     *            The {@link DrawMode} to use for rendering this shape, usually
-     *            passed from a parent context
-     *
+     * @param unattributedShape The original unattributed {@link Shape}
+     * @param color             The {@link Color} to assign to the pen
+     *                          (foreground)
+     * @param parentDrawMode    The {@link DrawMode} to use for rendering this
+     *                          shape, usually passed from a parent context
      * @since 1.0
      */
     public AttributedShape( final Shape unattributedShape,
@@ -119,16 +113,13 @@ public class AttributedShape {
      * This is the fully specified constructor, to use when the {@link Shape}
      * has known non-default attributes and needs to apply a transform.
      *
-     * @param unattributedShape
-     *            The original unattributed {@link Shape}
-     * @param color
-     *            The {@link Color} to assign to the pen (foreground)
-     * @param parentDrawMode
-     *            The {@link DrawMode} to use for rendering this shape, usually
-     *            passed from a parent context
-     * @param affineTransform
-     *            The {@link AffineTransform} to apply to the shape
-     *
+     * @param unattributedShape The original unattributed {@link Shape}
+     * @param color             The {@link Color} to assign to the pen
+     *                          (foreground)
+     * @param parentDrawMode    The {@link DrawMode} to use for rendering this
+     *                          shape, usually passed from a parent context
+     * @param affineTransform   The {@link AffineTransform} to apply to the
+     *                          shape
      * @since 1.0
      */
     public AttributedShape( final Shape unattributedShape,
@@ -140,5 +131,4 @@ public class AttributedShape {
         penColor = color;
         drawMode = parentDrawMode;
     }
-
 }

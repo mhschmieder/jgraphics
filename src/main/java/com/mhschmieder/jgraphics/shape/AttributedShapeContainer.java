@@ -41,9 +41,8 @@ import java.util.ArrayList;
  * scale transform is presumed to be constant and only needs to be set at
  * construction time. so there is no setter method for the scale transform.
  *
- * @version 1.0
- *
  * @author Mark Schmieder
+ * @version 1.0
  */
 public final class AttributedShapeContainer {
 
@@ -55,7 +54,7 @@ public final class AttributedShapeContainer {
     /**
      * Current scale factor, based on the Model Space's Unit of Measurement.
      */
-    private final AffineTransform              scaleTransform;
+    private final AffineTransform scaleTransform;
 
     //////////////////////////// Constructors ////////////////////////////////
 
@@ -75,9 +74,7 @@ public final class AttributedShapeContainer {
      * to zero or the usual Java default of 16), but when the scale transform is
      * uniform and thus not needed.
      *
-     * @param initialCapacity
-     *            The initial capacity of the shapes list
-     *
+     * @param initialCapacity The initial capacity of the shapes list
      * @since 1.0
      */
     public AttributedShapeContainer( final int initialCapacity ) {
@@ -90,12 +87,10 @@ public final class AttributedShapeContainer {
      * the usual Java default of 16), and when the scale transform is
      * non-uniform and thus is needed.
      *
-     * @param initialCapacity
-     *            The initial capacity of the shapes list
-     * @param parentScaleTransform
-     *            The scale transform to apply to the entire collection of
-     *            shapes, usually from a parent context
-     *
+     * @param initialCapacity      The initial capacity of the shapes list
+     * @param parentScaleTransform The scale transform to apply to the entire
+     *                             collection of shapes, usually from a parent
+     *                             context
      * @since 1.0
      */
     public AttributedShapeContainer( final int initialCapacity,
@@ -105,18 +100,17 @@ public final class AttributedShapeContainer {
     }
 
     /**
-     * This method clones this container, and then separately clones the list
-     * of shapes herein
+     * This method clones this container, and then separately clones the list of
+     * shapes herein
      *
      * @return The cloned copy of this {@link AttributedShapeContainer}
-     *
      * @since 1.0
      */
     @Override
     public Object clone() {
         try {
-            final AttributedShapeContainer geoms = ( AttributedShapeContainer )
-                    super.clone();
+            final AttributedShapeContainer geoms
+                    = ( AttributedShapeContainer ) super.clone();
             geoms.shapes2D.clone();
             return geoms;
         }
@@ -137,8 +131,7 @@ public final class AttributedShapeContainer {
      * repeated, as well as being ordered.
      *
      * @return The clonable {@link ArrayList} of {@link AttributedShape} objects
-     * in this container
-     *
+     *         in this container
      * @since 1.0
      */
     public ArrayList< AttributedShape > getAttributedShapes() {
@@ -146,7 +139,8 @@ public final class AttributedShapeContainer {
     }
 
     /**
-     * Returns the {@link AffineTransform} representing the global Scale Factor.
+     * Returns the {@link AffineTransform} representing the global Scale
+     * Factor.
      * <p>
      * This method returns the {@link AffineTransform} corresponding to the
      * scale factor to apply to the shapes in this collection, which is separate
@@ -154,7 +148,6 @@ public final class AttributedShapeContainer {
      *
      * @return The {@link AffineTransform} corresponding to the scale factor to
      *         apply to the shapes in this collection
-     *
      * @since 1.0
      */
     public AffineTransform getScaleTransform() {
@@ -171,7 +164,6 @@ public final class AttributedShapeContainer {
      * the collection.
      *
      * @return The number of shapes in this collection
-     *
      * @since 1.0
      */
     public int getNumberOfShapes() {
@@ -191,9 +183,7 @@ public final class AttributedShapeContainer {
      * Adds a {@link Shape} to the collection, with all attribute values
      * defaulted.
      *
-     * @param shape
-     *            The {@link Shape} to add to the collection
-     *
+     * @param shape The {@link Shape} to add to the collection
      * @since 1.0
      */
     public void addShape( final Shape shape ) {
@@ -207,14 +197,12 @@ public final class AttributedShapeContainer {
      * As this is part of a set of cascading methods, the specified pen color
      * attribute can be null or pre-defaulted.
      *
-     * @param shape
-     *            The {@link Shape} to add to the collection
-     * @param color
-     *            The pen color to apply to the {@link Shape}
-     *
+     * @param shape The {@link Shape} to add to the collection
+     * @param color The pen color to apply to the {@link Shape}
      * @since 1.0
      */
-    public void addShape( final Shape shape, final Color color ) {
+    public void addShape( final Shape shape,
+                          final Color color ) {
         addShape( shape, color, DrawMode.defaultValue() );
     }
 
@@ -225,17 +213,15 @@ public final class AttributedShapeContainer {
      * As this is part of a set of cascading methods, either specified attribute
      * can be null or pre-defaulted.
      *
-     * @param shape
-     *            The {@link Shape} to add to the collection
-     * @param color
-     *            The pen color to apply to the {@link Shape}
-     * @param parentDrawMode
-     *            The {@link DrawMode} to use for rendering the shape, usually
-     *            passed from a parent context
-     *
+     * @param shape          The {@link Shape} to add to the collection
+     * @param color          The pen color to apply to the {@link Shape}
+     * @param parentDrawMode The {@link DrawMode} to use for rendering the
+     *                       shape, usually passed from a parent context
      * @since 1.0
      */
-    public void addShape( final Shape shape, final Color color, final DrawMode parentDrawMode ) {
+    public void addShape( final Shape shape,
+                          final Color color,
+                          final DrawMode parentDrawMode ) {
         addShape( shape, color, parentDrawMode, null );
     }
 
@@ -246,16 +232,11 @@ public final class AttributedShapeContainer {
      * As this is part of a set of cascading methods, any or all of the
      * attributes can be null or pre-defaulted.
      *
-     * @param shape
-     *            The {@link Shape} to add to the collection
-     * @param color
-     *            The pen color to apply to the {@link Shape}
-     * @param parentDrawMode
-     *            The {@link DrawMode} to use for rendering the shape, usually
-     *            passed from a parent context
-     * @param affineTransform
-     *            The {@link AffineTransform} to apply to the shape
-     *
+     * @param shape           The {@link Shape} to add to the collection
+     * @param color           The pen color to apply to the {@link Shape}
+     * @param parentDrawMode  The {@link DrawMode} to use for rendering the
+     *                        shape, usually passed from a parent context
+     * @param affineTransform The {@link AffineTransform} to apply to the shape
      * @since 1.0
      */
     public void addShape( final Shape shape,
@@ -269,8 +250,10 @@ public final class AttributedShapeContainer {
             shapes2D.add( new AttributedShape( shape, color, parentDrawMode ) );
         }
         else {
-            shapes2D.add( new AttributedShape( shape, color, parentDrawMode, affineTransform ) );
+            shapes2D.add( new AttributedShape( shape,
+                                               color,
+                                               parentDrawMode,
+                                               affineTransform ) );
         }
     }
-
 }

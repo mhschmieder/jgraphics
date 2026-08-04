@@ -36,31 +36,36 @@ import java.util.ResourceBundle;
 public final class UndoableActionUtilities {
 
     /**
-     * The default constructor is disabled, as this is a static utilities class.
+     * The default constructor is disabled, as this is a static utilities
+     * class.
      */
-    private UndoableActionUtilities() {}
+    private UndoableActionUtilities() {
+    }
 
-    @SuppressWarnings("nls")
+    @SuppressWarnings( "nls" )
     public static String getUndoableActionPresentationName( final String undoableActionName,
                                                             final ResourceBundle resourceBundle ) {
         // Each undoable action must have an action name in order to find its
         // locale-specific presentation name.
-        if ( ( undoableActionName == null ) || undoableActionName.trim().isEmpty() ) {
+        if ( ( undoableActionName == null ) || undoableActionName.trim()
+                                                                 .isEmpty() ) {
             return null;
         }
 
         // Generate the resource lookup key for the undoable action presentation
         // name.
-        final String resourceKey = "undoableAction." + undoableActionName + ".presentationName";
+        final String resourceKey = "undoableAction." + undoableActionName
+                                   + ".presentationName";
 
         try {
-            final String undoableActionPresentationName = resourceBundle.getString( resourceKey );
+            final String undoableActionPresentationName
+                    = resourceBundle.getString( resourceKey );
             return undoableActionPresentationName;
         }
-        catch ( final MissingResourceException | ClassCastException | NullPointerException e ) {
+        catch ( final MissingResourceException | ClassCastException |
+                      NullPointerException e ) {
             e.printStackTrace();
             return null;
         }
     }
-
 }

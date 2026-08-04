@@ -42,35 +42,34 @@ import java.text.AttributedString;
 /**
  * {@code AttributedTextUtilities} is a utility class for methods related to
  * text, such as copying Text Attributes for purposes of rendering text directly
- * vs. writing strings to output formats and being dependent on installed fonts.
- *
- * @version 1.0
+ * vs. writing strings to output formats and being dependent on installed
+ * fonts.
  *
  * @author Mark Schmieder
+ * @version 1.0
  */
 public final class AttributedTextUtilities {
 
     /**
-     * The default constructor is disabled, as this is a static utilities class.
+     * The default constructor is disabled, as this is a static utilities
+     * class.
      */
-    private AttributedTextUtilities() {}
+    private AttributedTextUtilities() {
+    }
 
     /**
      * Copies Text Attributes from the supplied {@link Font} to the supplied
      * {@link AttributedString}.
      *
-     * @param font
-     *            The {@link Font} to use for Text Attributes
-     * @param attributedString
-     *            The {@link AttributedString} whose Text Attributes should be
-     *            set
-     * @param startIndex
-     *            The start index of the {@link String} that determines the
-     *            substring for which the Text Attributes apply
-     * @param endIndex
-     *            The end index of the {@link String} that determines the
-     *            substring for which the Text Attributes apply
-     *
+     * @param font             The {@link Font} to use for Text Attributes
+     * @param attributedString The {@link AttributedString} whose Text
+     *                         Attributes should be set
+     * @param startIndex       The start index of the {@link String} that
+     *                         determines the substring for which the Text
+     *                         Attributes apply
+     * @param endIndex         The end index of the {@link String} that
+     *                         determines the substring for which the Text
+     *                         Attributes apply
      * @since 1.0
      */
     public static void copyTextAttributes( final Font font,
@@ -81,9 +80,12 @@ public final class AttributedTextUtilities {
             return;
         }
 
-        attributedString
-                .addAttribute( TextAttribute.FAMILY, font.getFontName(), startIndex, endIndex );
-        attributedString.addAttribute( TextAttribute.SIZE, Float.valueOf( font.getSize2D() ) );
+        attributedString.addAttribute( TextAttribute.FAMILY,
+                                       font.getFontName(),
+                                       startIndex,
+                                       endIndex );
+        attributedString.addAttribute( TextAttribute.SIZE,
+                                       Float.valueOf( font.getSize2D() ) );
         if ( font.isBold() ) {
             attributedString.addAttribute( TextAttribute.WEIGHT,
                                            TextAttribute.WEIGHT_BOLD,
@@ -100,22 +102,20 @@ public final class AttributedTextUtilities {
 
     /**
      * Returns a {@link Shape} that represents the vector graphics rendering of
-     * the text, or {@code null} if any of the parameters are null
-     * This method iterates over a paragraph of text and renders it as vector
-     * graphics using a supplied font render context.
+     * the text, or {@code null} if any of the parameters are null This method
+     * iterates over a paragraph of text and renders it as vector graphics using
+     * a supplied font render context.
      *
-     * @param iterator
-     *            The {@link AttributedCharacterIterator} whose text is to be
-     *            rendered
-     * @param fontRenderContext
-     *            The {@link FontRenderContext} for the supplied text
-     * @param x
-     *            The x coordinate where the iterator's text is to be rendered
-     * @param y
-     *            The y coordinate where the iterator's text is to be rendered
+     * @param iterator          The {@link AttributedCharacterIterator} whose
+     *                          text is to be rendered
+     * @param fontRenderContext The {@link FontRenderContext} for the supplied
+     *                          text
+     * @param x                 The x coordinate where the iterator's text is to
+     *                          be rendered
+     * @param y                 The y coordinate where the iterator's text is to
+     *                          be rendered
      * @return The {@link Shape} that represents the vector graphics rendering
      *         of the text, or {@code null} if any of the parameters are null
-     *
      * @since 1.0
      */
     public static Shape getRenderedText( final AttributedCharacterIterator iterator,
@@ -127,9 +127,10 @@ public final class AttributedTextUtilities {
         }
 
         final TextLayout layout = new TextLayout( iterator, fontRenderContext );
-        final AffineTransform transform = AffineTransform.getTranslateInstance( x, y );
+        final AffineTransform transform = AffineTransform.getTranslateInstance(
+                x,
+                y );
         final Shape shape = layout.getOutline( transform );
         return shape;
     }
-
 }

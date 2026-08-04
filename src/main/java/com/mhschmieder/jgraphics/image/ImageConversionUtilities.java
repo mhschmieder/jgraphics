@@ -32,11 +32,6 @@ package com.mhschmieder.jgraphics.image;
 
 import org.apache.commons.math3.util.FastMath;
 
-import javax.imageio.IIOImage;
-import javax.imageio.ImageIO;
-import javax.imageio.ImageWriteParam;
-import javax.imageio.ImageWriter;
-import javax.imageio.stream.ImageOutputStream;
 import java.awt.Component;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -60,31 +55,37 @@ import java.util.Iterator;
 import java.util.Locale;
 import java.util.NoSuchElementException;
 
+import javax.imageio.IIOImage;
+import javax.imageio.ImageIO;
+import javax.imageio.ImageWriteParam;
+import javax.imageio.ImageWriter;
+import javax.imageio.stream.ImageOutputStream;
+
 /**
  * {@code ImageConversionUtilities} is a utility class for Graphics2D based
  * image conversion methods that are needed in many different contexts.
  *
- * @version 1.0
- *
  * @author Mark Schmieder
+ * @version 1.0
  */
 public final class ImageConversionUtilities {
 
     /**
-     * The default constructor is disabled, as this is a static utilities class.
+     * The default constructor is disabled, as this is a static utilities
+     * class.
      */
-    private ImageConversionUtilities() {}
+    private ImageConversionUtilities() {
+    }
 
     /**
      * Converts a supplied {@link RenderedImage} to its corresponding
      * {@link BufferedImage}.
      *
-     * @param renderedImage
-     *            The Rendered Image to use as a source for a new Buffered Image
+     * @param renderedImage The Rendered Image to use as a source for a new
+     *                      Buffered Image
      * @return A {@link BufferedImage} that is either copied from the original
      *         {@link RenderedImage} or is the original reference when it was
      *         already a {@link RenderedImage}, or {@code null} if {@code null}
-     *
      * @since 1.0
      */
     public static BufferedImage convertRenderedImage( final RenderedImage renderedImage ) {
@@ -100,7 +101,9 @@ public final class ImageConversionUtilities {
         final ColorModel colorModel = renderedImage.getColorModel();
         final int width = renderedImage.getWidth();
         final int height = renderedImage.getHeight();
-        final WritableRaster raster = colorModel.createCompatibleWritableRaster( width, height );
+        final WritableRaster raster = colorModel.createCompatibleWritableRaster(
+                width,
+                height );
         final boolean isAlphaPremultiplied = colorModel.isAlphaPremultiplied();
 
         final Hashtable< String, Object > properties = new Hashtable<>();
@@ -121,26 +124,20 @@ public final class ImageConversionUtilities {
     }
 
     /**
-     * Returns a two-dimensional array of integer-based pixels grabbed from
-     * the supplied {@link Image}, using the format that PostScript needs
-     * for images. Depending on the parameters, this might not be the full
-     * image, as image cropping is supported by the {@link PixelGrabber}.
+     * Returns a two-dimensional array of integer-based pixels grabbed from the
+     * supplied {@link Image}, using the format that PostScript needs for
+     * images. Depending on the parameters, this might not be the full image, as
+     * image cropping is supported by the {@link PixelGrabber}.
      *
-     * @param image
-     *            The source image to convert to pixels
-     * @param x
-     *            The x coordinate of the upper left corner of the region to
-     *            retrieve from the image
-     * @param y
-     *            The y coordinate of the upper left corner of the region to
-     *            retrieve from the image
-     * @param width
-     *            The width of the rectangle of pixels to retrieve
-     * @param height
-     *            The height of the rectangle of pixels to retrieve
+     * @param image  The source image to convert to pixels
+     * @param x      The x coordinate of the upper left corner of the region to
+     *               retrieve from the image
+     * @param y      The y coordinate of the upper left corner of the region to
+     *               retrieve from the image
+     * @param width  The width of the rectangle of pixels to retrieve
+     * @param height The height of the rectangle of pixels to retrieve
      * @return An integer array of pixels grabbed from the original
      *         {@link Image}
-     *
      * @since 1.0
      */
     public static int[] getImagePixels( final Image image,
@@ -173,14 +170,14 @@ public final class ImageConversionUtilities {
 
     /**
      * Returns a {@link BufferedImage} created as a packed raster using the
-     * supplied two-dimensional array of integer-based pixels and applying
-     * the standard default RGB Color Model with proper ARGB Band Masks.
-     * 
+     * supplied two-dimensional array of integer-based pixels and applying the
+     * standard default RGB Color Model with proper ARGB Band Masks.
+     *
      * @param pixels The two-dimensional integer-based array of pixels
-     * @param width The width (number of columns per row) to use for reading
-     *              the one-dimensional array as a two-dimensional value set
-     * @param height The height (number of pixels per column) to hint the 
-     *               packed raster utility for converting to a BufferedImage.
+     * @param width  The width (number of columns per row) to use for reading
+     *               the one-dimensional array as a two-dimensional value set
+     * @param height The height (number of pixels per column) to hint the packed
+     *               raster utility for converting to a BufferedImage.
      * @return a {@link BufferedImage} in ARGB color space as a packed raster
      */
     public static BufferedImage createBufferedImage( final int[] pixels,
@@ -199,7 +196,7 @@ public final class ImageConversionUtilities {
                                                                  width,
                                                                  bandMasks,
                                                                  null );
-        
+
         final ColorModel cm = ColorModel.getRGBdefault();
         return new BufferedImage( cm, raster, cm.isAlphaPremultiplied(), null );
     }
@@ -208,21 +205,19 @@ public final class ImageConversionUtilities {
      * This method takes an existing {@link BufferedImage} and converts it to
      * the requested Image Format, using the original AWT Imaging API.
      *
-     * @param bufferedImage
-     *            The {@link BufferedImage} whose Image Type should be swapped
-     * @param imageFormatName
-     *            The Image Format to use as the new format for the supplied
-     *            {@link BufferedImage}
+     * @param bufferedImage   The {@link BufferedImage} whose Image Type should
+     *                        be swapped
+     * @param imageFormatName The Image Format to use as the new format for the
+     *                        supplied {@link BufferedImage}
      * @return A new {@link BufferedImage} corresponding to the original
      *         {@link BufferedImage} with the Image Type swapped
-     *
      * @since 1.0
      */
-    @SuppressWarnings("nls")
+    @SuppressWarnings( "nls" )
     public static BufferedImage swapImageType( final BufferedImage bufferedImage,
                                                final String imageFormatName ) {
         BufferedImage convertedImage = bufferedImage;
-        
+
         // There is a known bug in Oracle's code, so we do the recommended
         // workaround to replace the incorrect Image Type that their utility
         // method sets for JPEG and BMP (the latter won't output).
@@ -240,26 +235,27 @@ public final class ImageConversionUtilities {
         // final int imageType = bufferedImage.getType();
         // if ( imageType == BufferedImage.TYPE_4BYTE_ABGR ) {
         final ColorConvertOp op = new ColorConvertOp( null );
-        final String imageFormatNameCaseInsensitive = imageFormatName.toLowerCase( Locale.ENGLISH );
+        final String imageFormatNameCaseInsensitive
+                = imageFormatName.toLowerCase( Locale.ENGLISH );
         switch ( imageFormatNameCaseInsensitive ) {
-        case "jpg":
-        case "bmp":
-            // Make a Component Color Image.
-            convertedImage = new BufferedImage( bufferedImage.getWidth(),
-                                                bufferedImage.getHeight(), 
-                                                BufferedImage.TYPE_3BYTE_BGR );
-            op.filter( bufferedImage, convertedImage );
-            break;
-        case "tiff":
-        case "tif":
-            // Make a Direct Color Image.
-            convertedImage = new BufferedImage( bufferedImage.getWidth(),
-                                                bufferedImage.getHeight(),
-                                                BufferedImage.TYPE_INT_RGB );
-            op.filter( bufferedImage, convertedImage );
-            break;
-        default:
-            break;
+            case "jpg":
+            case "bmp":
+                // Make a Component Color Image.
+                convertedImage = new BufferedImage( bufferedImage.getWidth(),
+                                                    bufferedImage.getHeight(),
+                                                    BufferedImage.TYPE_3BYTE_BGR );
+                op.filter( bufferedImage, convertedImage );
+                break;
+            case "tiff":
+            case "tif":
+                // Make a Direct Color Image.
+                convertedImage = new BufferedImage( bufferedImage.getWidth(),
+                                                    bufferedImage.getHeight(),
+                                                    BufferedImage.TYPE_INT_RGB );
+                op.filter( bufferedImage, convertedImage );
+                break;
+            default:
+                break;
         }
         // }
 
@@ -267,37 +263,33 @@ public final class ImageConversionUtilities {
     }
 
     /**
-     * This method take a provided AWT (or Swing) {@link Component} and
-     * renders it to a JPEG image which is written to the provided {@link File}.
+     * This method take a provided AWT (or Swing) {@link Component} and renders
+     * it to a JPEG image which is written to the provided {@link File}.
      * <p>
      * The Buffered Image is returned to the client for purposes of querying the
      * actual pixel dimensions after adjusting for Aspect Ratio.
      *
-     * @param component
-     *            The {@link Component} to render to a JPEG file
-     * @param imageFile
-     *            The {@link File} to use for writing the JPEG image
-     * @param pixelWidth
-     *            The preferred width in pixels for the JPEG image
-     * @param pixelHeight
-     *            The preferred height in pixels for the JPEG image
-     * @param autoSizeImage
-     *            {@code true} if the image should be auto-sized; {@code false}
-     *            if the real Aspect Ratio should be retained
+     * @param component     The {@link Component} to render to a JPEG file
+     * @param imageFile     The {@link File} to use for writing the JPEG image
+     * @param pixelWidth    The preferred width in pixels for the JPEG image
+     * @param pixelHeight   The preferred height in pixels for the JPEG image
+     * @param autoSizeImage {@code true} if the image should be auto-sized;
+     *                      {@code false} if the real Aspect Ratio should be
+     *                      retained
      * @return The JPEG {@link Image} that was written to the supplied
      *         {@link File}
-     *
      * @since 1.0
      */
-    @SuppressWarnings("nls")
+    @SuppressWarnings( "nls" )
     public static BufferedImage renderComponentToJpegFile( final Component component,
                                                            final File imageFile,
                                                            final double pixelWidth,
                                                            final double pixelHeight,
                                                            final boolean autoSizeImage ) {
-        try ( final FileOutputStream fileOutputStream = new FileOutputStream( imageFile );
-                final BufferedOutputStream imageStream =
-                                                       new BufferedOutputStream( fileOutputStream ) ) {
+        try ( final FileOutputStream fileOutputStream = new FileOutputStream(
+                imageFile );
+              final BufferedOutputStream imageStream = new BufferedOutputStream(
+                      fileOutputStream ) ) {
             final BufferedImage image = renderComponent( component,
                                                          imageStream,
                                                          pixelWidth,
@@ -308,42 +300,41 @@ public final class ImageConversionUtilities {
 
             return image;
         }
-        catch ( final NullPointerException | SecurityException | IOException e ) {
+        catch ( final NullPointerException | SecurityException |
+                      IOException e ) {
             e.printStackTrace();
             return null;
         }
     }
 
     /**
-     * This method take a provided AWT (or Swing) {@link Component} and
-     * renders it to an image which is written to the provided
-     * {@link OutputStream} using the provided Image Format.
+     * This method take a provided AWT (or Swing) {@link Component} and renders
+     * it to an image which is written to the provided {@link OutputStream}
+     * using the provided Image Format.
      * <p>
      * The Buffered Image is returned to the client for purposes of querying the
      * actual pixel dimensions after adjusting for Aspect Ratio.
      *
-     * @param component
-     *            The {@link Component} to render to an output stream
-     * @param outputStream
-     *            The {@link OutputStream} to use for writing the produced image
-     * @param pixelWidth
-     *            The preferred width in pixels for the produced image
-     * @param pixelHeight
-     *            The preferred height in pixels for the produced image
-     * @param autoSizeImage
-     *            {@code true} if the image should be auto-sized; {@code false}
-     *            if the real Aspect Ratio should be retained
-     * @param imageFormatName
-     *            The Image Format Name to use for the produced image
-     * @param compressionQuality
-     *            The Compression Quality to use for the produced image; not
-     *            relevant to all Image Formats
+     * @param component          The {@link Component} to render to an output
+     *                           stream
+     * @param outputStream       The {@link OutputStream} to use for writing the
+     *                           produced image
+     * @param pixelWidth         The preferred width in pixels for the produced
+     *                           image
+     * @param pixelHeight        The preferred height in pixels for the produced
+     *                           image
+     * @param autoSizeImage      {@code true} if the image should be auto-sized;
+     *                           {@code false} if the real Aspect Ratio should
+     *                           be retained
+     * @param imageFormatName    The Image Format Name to use for the produced
+     *                           image
+     * @param compressionQuality The Compression Quality to use for the produced
+     *                           image; not relevant to all Image Formats
      * @return The JPEG {@link Image} that was written to the supplied
      *         {@link OutputStream}
-     *
      * @since 1.0
      */
-    @SuppressWarnings("nls")
+    @SuppressWarnings( "nls" )
     public static BufferedImage renderComponent( final Component component,
                                                  final OutputStream outputStream,
                                                  final double pixelWidth,
@@ -358,15 +349,16 @@ public final class ImageConversionUtilities {
         }
 
         // Create a Buffered Image based on rasterization of the component.
-        final String imageFormatNameCaseInsensitive = imageFormatName.toLowerCase( Locale.ENGLISH );
+        final String imageFormatNameCaseInsensitive
+                = imageFormatName.toLowerCase( Locale.ENGLISH );
         int imageType = BufferedImage.TYPE_INT_RGB;
         switch ( imageFormatNameCaseInsensitive ) {
-        case "wbm":
-        case "wbmp":
-            imageType = BufferedImage.TYPE_BYTE_BINARY;
-            break;
-        default:
-            break;
+            case "wbm":
+            case "wbmp":
+                imageType = BufferedImage.TYPE_BYTE_BINARY;
+                break;
+            default:
+                break;
         }
         final BufferedImage bufferedImage = renderComponent( component,
                                                              pixelWidth,
@@ -383,16 +375,16 @@ public final class ImageConversionUtilities {
         // listed 5%, 75% and 95% levels; may need to switch to default writer?
         boolean handleCompressionQuality = false;
         switch ( imageFormatNameCaseInsensitive ) {
-        case "jpg":
-        case "jpeg":
-        case "jpe":
-            handleCompressionQuality = true;
-            break;
-        default:
-            if ( compressionQuality < 1.0f ) {
+            case "jpg":
+            case "jpeg":
+            case "jpe":
                 handleCompressionQuality = true;
-            }
-            break;
+                break;
+            default:
+                if ( compressionQuality < 1.0f ) {
+                    handleCompressionQuality = true;
+                }
+                break;
         }
 
         try {
@@ -400,8 +392,9 @@ public final class ImageConversionUtilities {
                 // Make sure there is an Image Writer installed for the selected
                 // Image Format.
                 ImageWriter imageWriter = null;
-                final Iterator< ImageWriter > iter = ImageIO
-                        .getImageWritersByFormatName( imageFormatName );
+                final Iterator< ImageWriter > iter
+                        =
+                        ImageIO.getImageWritersByFormatName( imageFormatName );
                 if ( iter.hasNext() ) {
                     imageWriter = iter.next();
                 }
@@ -410,8 +403,9 @@ public final class ImageConversionUtilities {
                 }
 
                 // Make an Image Output Stream for more efficient output.
-                try ( final ImageOutputStream imageOutputStream = ImageIO
-                        .createImageOutputStream( outputStream ) ) {
+                try ( final ImageOutputStream imageOutputStream =
+                              ImageIO.createImageOutputStream(
+                        outputStream ) ) {
                     // Assign the Image Writer to the Image Output Stream.
                     //
                     // Although the API supports using any Output Stream, we get
@@ -423,24 +417,28 @@ public final class ImageConversionUtilities {
                     // We use explicit compression ratios vs. string-matching
                     // compression quality to "good", "fine", etc., so we have
                     // no need for Locale and can set it to null via defaults.
-                    final ImageWriteParam imageWriteParam = imageWriter.getDefaultWriteParam();
+                    final ImageWriteParam imageWriteParam
+                            = imageWriter.getDefaultWriteParam();
                     switch ( imageFormatNameCaseInsensitive ) {
-                    case "jpg":
-                    case "jpeg":
-                    case "jpe":
-                        imageWriteParam.setCompressionMode( ImageWriteParam.MODE_EXPLICIT );
-                        imageWriteParam.setCompressionQuality( compressionQuality );
-                        break;
-                    case "png":
-                        imageWriteParam.setProgressiveMode( ImageWriteParam.MODE_DEFAULT );
-                        break;
-                    default:
-                        break;
+                        case "jpg":
+                        case "jpeg":
+                        case "jpe":
+                            imageWriteParam.setCompressionMode( ImageWriteParam.MODE_EXPLICIT );
+                            imageWriteParam.setCompressionQuality(
+                                    compressionQuality );
+                            break;
+                        case "png":
+                            imageWriteParam.setProgressiveMode( ImageWriteParam.MODE_DEFAULT );
+                            break;
+                        default:
+                            break;
                     }
 
                     // Construct an Image I/O API custom Image object, sans
                     // thumbnail image, and sans image metadata.
-                    final IIOImage iioImage = new IIOImage( bufferedImage, null, null );
+                    final IIOImage iioImage = new IIOImage( bufferedImage,
+                                                            null,
+                                                            null );
 
                     // Write the Buffered Image to the Output Stream via the
                     // Image Writer, sans stream metadata.
@@ -456,38 +454,40 @@ public final class ImageConversionUtilities {
 
             // As long as no compression or other customization is needed, it is
             // simpler and less risky to use the default Image Writer.
-            final boolean succeeded = ImageIO.write( bufferedImage, imageFormatName, outputStream );
+            final boolean succeeded = ImageIO.write( bufferedImage,
+                                                     imageFormatName,
+                                                     outputStream );
 
             // Cleanup.
             outputStream.flush();
 
-            return succeeded ? bufferedImage : null;
+            return succeeded
+                   ? bufferedImage
+                   : null;
         }
-        catch ( final IOException | IllegalArgumentException | IllegalStateException
-                | UnsupportedOperationException | NoSuchElementException e ) {
+        catch ( final IOException | IllegalArgumentException |
+                      IllegalStateException | UnsupportedOperationException |
+                      NoSuchElementException e ) {
             e.printStackTrace();
             return null;
         }
     }
 
     /**
-     * This method take a provided AWT (or Swing) {@link Component} and
-     * renders it to a {@link BufferedImage}.
+     * This method take a provided AWT (or Swing) {@link Component} and renders
+     * it to a {@link BufferedImage}.
      *
-     * @param component
-     *            The {@link Component} to render to an output stream
-     * @param pixelWidth
-     *            The preferred width in pixels for the produced image
-     * @param pixelHeight
-     *            The preferred height in pixels for the produced image
-     * @param autoSizeImage
-     *            {@code true} if the image should be auto-sized; {@code false}
-     *            if the real Aspect Ratio should be retained
-     * @param imageType
-     *            The Image Type to use for the produced image
+     * @param component     The {@link Component} to render to an output stream
+     * @param pixelWidth    The preferred width in pixels for the produced
+     *                      image
+     * @param pixelHeight   The preferred height in pixels for the produced
+     *                      image
+     * @param autoSizeImage {@code true} if the image should be auto-sized;
+     *                      {@code false} if the real Aspect Ratio should be
+     *                      retained
+     * @param imageType     The Image Type to use for the produced image
      * @return The JPEG {@link Image} that was written to the supplied
      *         {@link OutputStream}
-     *
      * @since 1.0
      */
     private static BufferedImage renderComponent( final Component component,
@@ -505,7 +505,8 @@ public final class ImageConversionUtilities {
         // Ratio, then use it to create a Buffered Image. The larger of the
         // desired Pixel Dimensions is preferred.
         if ( !autoSizeImage ) {
-            final double componentAspectRatio = componentWidth / ( double ) componentHeight;
+            final double componentAspectRatio = componentWidth
+                                                / ( double ) componentHeight;
             final double pixelAspectRatio = pixelWidth / pixelHeight;
 
             // Prioritize the larger of the Pixel Dimensions, and then match the
@@ -513,21 +514,25 @@ public final class ImageConversionUtilities {
             if ( componentAspectRatio >= pixelAspectRatio ) {
                 if ( pixelWidth >= pixelHeight ) {
                     imageWidth = pixelWidth;
-                    imageHeight = ( int ) FastMath.round( pixelWidth / componentAspectRatio );
+                    imageHeight = ( int ) FastMath.round(
+                            pixelWidth / componentAspectRatio );
                 }
                 else {
-                    imageWidth = ( int ) FastMath.round( pixelHeight * componentAspectRatio );
+                    imageWidth = ( int ) FastMath.round(
+                            pixelHeight * componentAspectRatio );
                     imageHeight = pixelHeight;
                 }
             }
             else {
                 if ( pixelWidth >= pixelHeight ) {
-                    imageWidth = ( int ) FastMath.round( pixelHeight * componentAspectRatio );
+                    imageWidth = ( int ) FastMath.round(
+                            pixelHeight * componentAspectRatio );
                     imageHeight = pixelHeight;
                 }
                 else {
                     imageWidth = pixelWidth;
-                    imageHeight = ( int ) FastMath.round( pixelWidth / componentAspectRatio );
+                    imageHeight = ( int ) FastMath.round(
+                            pixelWidth / componentAspectRatio );
                 }
             }
         }
@@ -547,15 +552,18 @@ public final class ImageConversionUtilities {
         g2.dispose();
 
         // Set up the scaled Buffered Image metrics for the Component.
-        BufferedImage scaledImage = new BufferedImage( ( int ) FastMath.round( imageWidth ),
-                                                       ( int ) FastMath.round( imageHeight ),
+        BufferedImage scaledImage = new BufferedImage( ( int ) FastMath.round(
+                imageWidth ),
+                                                       ( int ) FastMath.round(
+                                                               imageHeight ),
                                                        imageType );
 
         // Scale the image using bilinear interpolation, so that text labels are
         // legible and raster transitions are more precise.
         final double sx = imageWidth / componentWidth;
         final double sy = imageHeight / componentHeight;
-        final AffineTransform imageScale = AffineTransform.getScaleInstance( sx, sy );
+        final AffineTransform imageScale = AffineTransform.getScaleInstance( sx,
+                                                                             sy );
         final AffineTransformOp op = new AffineTransformOp( imageScale,
                                                             AffineTransformOp.TYPE_BILINEAR );
         scaledImage = op.filter( bufferedImage, scaledImage );
@@ -563,5 +571,4 @@ public final class ImageConversionUtilities {
         // Return the scaled image.
         return scaledImage;
     }
-
 }

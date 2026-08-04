@@ -38,5 +38,6 @@ package com.mhschmieder.jgraphics.color;
  * derived classes to provide their own custom palettes via method override.
  */
 public enum ColorPalette {
-    JET, CUSTOM;
+    JET,
+    CUSTOM;
 }

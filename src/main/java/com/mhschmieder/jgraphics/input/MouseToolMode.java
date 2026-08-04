@@ -37,31 +37,24 @@ import com.mhschmieder.jcommons.lang.Labeled;
  * <code>MouseToolMode</code> is an enumeration of typical mouse tool modes.
  */
 public enum MouseToolMode implements Labeled< MouseToolMode > {
-    SELECT( "select" ), 
-    MOVE( "move" ), 
-    ROTATE( "rotate" ), 
-    ZOOM( "zoom" ), 
-    PAN( "pan" ), 
-    LINE( "line" ), 
-    MEASURE( "measure" ), 
-    COPY( "copy" ), 
+    SELECT( "select" ),
+    MOVE( "move" ),
+    ROTATE( "rotate" ),
+    ZOOM( "zoom" ),
+    PAN( "pan" ),
+    LINE( "line" ),
+    MEASURE( "measure" ),
+    COPY( "copy" ),
     PASTE( "paste" );
-    
+
     private final String label;
-    
-    MouseToolMode(final String pLabel) {
+
+    MouseToolMode( final String pLabel ) {
         label = pLabel;
     }
 
-    @Override
-    public String label() {
-        return label;
-    }
-
-    @Override
-    public MouseToolMode valueOfLabel( final String text ) {
-        return ( MouseToolMode ) EnumUtilities.getLabeledEnumFromLabel( 
-            text, values() );
+    public static MouseToolMode defaultValue() {
+        return SELECT;
     }
 
     @Override
@@ -72,7 +65,14 @@ public enum MouseToolMode implements Labeled< MouseToolMode > {
         return label();
     }
 
-    public static MouseToolMode defaultValue() {
-        return SELECT;
+    @Override
+    public String label() {
+        return label;
+    }
+
+    @Override
+    public MouseToolMode valueOfLabel( final String text ) {
+        return ( MouseToolMode ) EnumUtilities.getLabeledEnumFromLabel( text,
+                                                                        values() );
     }
 }

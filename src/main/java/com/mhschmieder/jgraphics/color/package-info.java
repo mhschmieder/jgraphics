@@ -31,9 +31,5 @@
 /**
  * This package contains the jgraphics Library's color utility classes that
  * aren't dependent on Graphics2D sub-packages.
- *
- * @version 1.0
- *
- * @author Mark Schmieder
  */
 package com.mhschmieder.jgraphics.color;

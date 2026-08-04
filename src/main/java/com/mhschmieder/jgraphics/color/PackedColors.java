@@ -36,15 +36,20 @@ package com.mhschmieder.jgraphics.color;
 public final class PackedColors {
 
     /**
-     * The default constructor is disabled, as this is a static utilities class.
+     * Provide a fully transparent color for certain conditions.
      */
-    private PackedColors() {}
+    public static final int TRANSPARENT_PACKED_COLOR
+            = ColorUtilities.makePackedColor( 0, 0, 0, 0 );
+    /**
+     * Provide a semi-transparent color for certain debug-enhanced cases.
+     */
+    public static final int SEMI_TRANSPARENT_PACKED_COLOR
+            = ColorUtilities.makePackedColor( 0, 0, 0, 20 );
 
-    /** Provide a fully transparent color for certain conditions. */
-    public static final int TRANSPARENT_PACKED_COLOR = ColorUtilities
-            .makePackedColor( 0, 0, 0, 0 );
-
-    /** Provide a semi-transparent color for certain debug-enhanced cases. */
-    public static final int SEMI_TRANSPARENT_PACKED_COLOR = ColorUtilities
-            .makePackedColor( 0, 0, 0, 20 );
+    /**
+     * The default constructor is disabled, as this is a static utilities
+     * class.
+     */
+    private PackedColors() {
+    }
 }

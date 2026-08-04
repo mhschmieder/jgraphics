@@ -31,9 +31,5 @@
 /**
  * This package contains the jgraphics Library's image utility classes that are
  * dependent on AWT's image sub-packages.
- *
- * @version 1.0
- *
- * @author Mark Schmieder
  */
 package com.mhschmieder.jgraphics.image;

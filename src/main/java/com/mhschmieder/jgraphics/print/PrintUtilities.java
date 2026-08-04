@@ -30,34 +30,35 @@
  */
 package com.mhschmieder.jgraphics.print;
 
-import javax.swing.JComponent;
 import java.awt.Component;
+
+import javax.swing.JComponent;
 
 /**
  * {@code PrintUtilities} is a utility class for methods dealing with printing.
  *
- * @version 1.0
- *
  * @author Mark Schmieder
+ * @version 1.0
  */
 public final class PrintUtilities {
 
     /**
-     * The default constructor is disabled, as this is a static utilities class.
+     * The default constructor is disabled, as this is a static utilities
+     * class.
      */
-    private PrintUtilities() {}
+    private PrintUtilities() {
+    }
 
     /**
      * Disables double buffering on the provided {@link Component}, as long as
      * it is a Swing {@link JComponent} instance. Otherwise it takes no action.
      *
-     * @param component
-     *            The {@link Component} to disable from using double buffering
+     * @param component The {@link Component} to disable from using double
+     *                  buffering
      * @return {@code true} if double buffering was previously enabled on the
      *         provided {@link Component}, {@code false} if it wasn't, or if the
      *         provided {@link Component} is not a Swing {@link JComponent}
      *         instance
-     *
      * @since 1.0
      */
     public static boolean disableDoubleBuffering( final Component component ) {
@@ -76,13 +77,12 @@ public final class PrintUtilities {
      * also set to {@code true}; otherwise turns off double buffering if set to
      * {@code false}.
      *
-     * @param component
-     *            The {@link Component} to set to double buffering
-     * @param setToDoubleBuffered
-     *            {@code true} if we should set the provided {@link Component}
-     *            to use a buffer to paint, {@code false} if no double buffering
-     *            is required
-     *
+     * @param component           The {@link Component} to set to double
+     *                            buffering
+     * @param setToDoubleBuffered {@code true} if we should set the provided
+     *                            {@link Component} to use a buffer to paint,
+     *                            {@code false} if no double buffering is
+     *                            required
      * @since 1.0
      */
     public static void setDoubleBuffering( final Component component,
@@ -92,5 +92,4 @@ public final class PrintUtilities {
             jComponent.setDoubleBuffered( setToDoubleBuffered );
         }
     }
-
 }

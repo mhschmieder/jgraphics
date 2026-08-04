@@ -51,9 +51,8 @@ import java.awt.RenderingHints;
  * rendered images, but usually that is handled differently so this interface is
  * primarily purposed towards AWT and Swing components.
  *
- * @version 1.0
- *
  * @author Mark Schmieder
+ * @version 1.0
  */
 public interface RenderingHintSource {
 
@@ -61,10 +60,8 @@ public interface RenderingHintSource {
      * Returns the {@link RenderingHints} that are cached on this layout
      * container.
      *
-     * @return
-     *         The {@link RenderingHints} that are cached on this layout
+     * @return The {@link RenderingHints} that are cached on this layout
      *         container
-     *
      * @since 1.0
      */
     RenderingHints getRenderingHints();
@@ -74,11 +71,9 @@ public interface RenderingHintSource {
      * {@link RenderingHints} are usually passed down from a parent component
      * for consistency within a layout hierarchy.
      *
-     * @param parentRenderingHints
-     *            The {@link RenderingHints} to apply to this layout container
-     *
+     * @param parentRenderingHints The {@link RenderingHints} to apply to this
+     *                             layout container
      * @since 1.0
      */
     void setRenderingHints( final RenderingHints parentRenderingHints );
-
 }

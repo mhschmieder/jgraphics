@@ -31,9 +31,5 @@
 /**
  * This package contains the jgraphics Library's print utility classes that are
  * dependent on the Java Print Services API.
- *
- * @version 1.0
- *
- * @author Mark Schmieder
  */
 package com.mhschmieder.jgraphics.print;

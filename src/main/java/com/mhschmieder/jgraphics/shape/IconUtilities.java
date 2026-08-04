@@ -40,37 +40,37 @@ import java.awt.geom.Line2D;
  * {@code IconUtilities} is a utility class for Graphics2D vector based icons
  * that are common in most graphics applications, such as custom crosshairs.
  *
- * @version 1.0
- *
  * @author Mark Schmieder
+ * @version 1.0
  */
 public final class IconUtilities {
 
     /**
-     * The default constructor is disabled, as this is a static utilities class.
+     * The default constructor is disabled, as this is a static utilities
+     * class.
      */
-    private IconUtilities() {}
+    private IconUtilities() {
+    }
 
     /**
      * Returns a {@link Shape} representing a typical Crosshairs Icon.
      * <p>
-     * This method creates a Crosshairs shape and translates it to the
-     * provided coordinates.
+     * This method creates a Crosshairs shape and translates it to the provided
+     * coordinates.
      *
-     * @param x
-     *            x translation to apply to the Crosshairs graphic
-     * @param y
-     *            y translation to apply to the Crosshairs graphic
-     * @param diameter
-     *            The diameter of the crosshairs
+     * @param x        x translation to apply to the Crosshairs graphic
+     * @param y        y translation to apply to the Crosshairs graphic
+     * @param diameter The diameter of the crosshairs
      * @return A Crosshairs Icon as a {@link GeneralPath} composite graphic
-     *
      * @since 1.0
      */
-    public static Shape getCrosshairs( final double x, final double y, final double diameter ) {
+    public static Shape getCrosshairs( final double x,
+                                       final double y,
+                                       final double diameter ) {
         // Get a translational affine transformation matrix for translating from
         // entity space to model space.
-        final AffineTransform affineTransform = AffineTransform.getTranslateInstance( x, y );
+        final AffineTransform affineTransform
+                = AffineTransform.getTranslateInstance( x, y );
 
         // Return the crosshairs defined at the specified location.
         return getCrosshairs( affineTransform, diameter );
@@ -82,12 +82,10 @@ public final class IconUtilities {
      * This method creates a Crosshairs shape and applies the provided
      * {@link AffineTransform} for translation, rotation, scale, and shear.
      *
-     * @param affineTransform
-     *            An {@link AffineTransform} to apply to the Crosshairs graphic
-     * @param diameter
-     *            The diameter of the crosshairs
+     * @param affineTransform An {@link AffineTransform} to apply to the
+     *                        Crosshairs graphic
+     * @param diameter        The diameter of the crosshairs
      * @return A Crosshairs Icon as a {@link GeneralPath} composite graphic
-     *
      * @since 1.0
      */
     public static Shape getCrosshairs( final AffineTransform affineTransform,
@@ -124,5 +122,4 @@ public final class IconUtilities {
 
         return result;
     }
-
 }

@@ -33,29 +33,35 @@ package com.mhschmieder.jgraphics.undo;
 import com.mhschmieder.jcommons.util.ClientProperties;
 import com.mhschmieder.jcommons.util.GlobalUtilities;
 
-import javax.swing.undo.StateEdit;
-import javax.swing.undo.StateEditable;
 import java.util.ResourceBundle;
 
-public final class UndoableActionFactory {
+import javax.swing.undo.StateEdit;
+import javax.swing.undo.StateEditable;
 
-    /**
-     * The default constructor is disabled, as this is a static utilities class.
-     */
-    private UndoableActionFactory() {}
+public final class UndoableActionFactory {
 
     // NOTE: We must substitute "." for resource directory tree delimiters.
     public static final String BUNDLE_NAME = "properties.UndoableActions";
 
+    /**
+     * The default constructor is disabled, as this is a static utilities
+     * class.
+     */
+    private UndoableActionFactory() {
+    }
+
     public static StateEdit getUndoableActionInstance( final StateEditable editableObject,
                                                        final String undoableActionName,
                                                        final ClientProperties pClientProperties ) {
-        final ResourceBundle resourceBundle = GlobalUtilities
-                .getResourceBundle( pClientProperties, BUNDLE_NAME, false );
+        final ResourceBundle resourceBundle = GlobalUtilities.getResourceBundle(
+                pClientProperties,
+                BUNDLE_NAME,
+                false );
 
-        final String presentationName = UndoableActionUtilities
-                .getUndoableActionPresentationName( undoableActionName, resourceBundle );
+        final String presentationName
+                = UndoableActionUtilities.getUndoableActionPresentationName(
+                undoableActionName,
+                resourceBundle );
         return new StateEdit( editableObject, presentationName );
     }
-
 }

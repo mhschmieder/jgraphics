@@ -38,34 +38,35 @@ import java.awt.geom.GeneralPath;
 import java.util.List;
 
 /**
- * {@code ShapeUtilities} is a utility class for Graphics2D based methods
- * that are often needed when batching large numbers of graphics primitives,
- * when it may be more efficient to append to a single {@link GeneralPath}
- * repetitively than to make large numbers of individual graphics primitives.
- *
- * @version 1.0
+ * {@code ShapeUtilities} is a utility class for Graphics2D based methods that
+ * are often needed when batching large numbers of graphics primitives, when it
+ * may be more efficient to append to a single {@link GeneralPath} repetitively
+ * than to make large numbers of individual graphics primitives.
  *
  * @author Mark Schmieder
+ * @version 1.0
  */
 public final class ShapeUtilities {
 
     /**
-     * The default constructor is disabled, as this is a static utilities class.
+     * The default constructor is disabled, as this is a static utilities
+     * class.
      */
-    private ShapeUtilities() {}
+    private ShapeUtilities() {
+    }
 
     /**
      * Draws an Arrow on the given graphics canvas.
      * <p>
      * NOTE: To clarify, the provided percent is presumed to have already been
-     *  converted from the { 0, 100 } range to a decimal number between zero and
-     *  one that is ready as a multiplier.
+     * converted from the { 0, 100 } range to a decimal number between zero and
+     * one that is ready as a multiplier.
      *
-     * @param g the Graphics context to use as the canvas
-     * @param startX the point-end of the arrow, x-coordinate
-     * @param startY the point-end of the arrow, y-coordinate
-     * @param endX the head end of the arrow, x-coordinate
-     * @param endY the head end of the arrow, y-coordinate
+     * @param g                  the Graphics context to use as the canvas
+     * @param startX             the point-end of the arrow, x-coordinate
+     * @param startY             the point-end of the arrow, y-coordinate
+     * @param endX               the head end of the arrow, x-coordinate
+     * @param endY               the head end of the arrow, y-coordinate
      * @param headDecimalPercent the decimal percent by which to multiply the
      *                           arrow length, to determine the head length
      */
@@ -87,11 +88,15 @@ public final class ShapeUtilities {
         arrowHeadX[ 0 ] = endX;
         arrowHeadY[ 0 ] = endY;
 
-        arrowHeadX[ 1 ] = xArrowButt - ( int ) ( ( yDiff / 2 ) * headDecimalPercent );
-        arrowHeadY[ 1 ] = yArrowButt + ( int ) ( ( xDiff / 2 ) * headDecimalPercent );
+        arrowHeadX[ 1 ] = xArrowButt - ( int ) ( ( yDiff / 2 )
+                                                 * headDecimalPercent );
+        arrowHeadY[ 1 ] = yArrowButt + ( int ) ( ( xDiff / 2 )
+                                                 * headDecimalPercent );
 
-        arrowHeadX[ 2 ] = xArrowButt + ( int ) ( ( yDiff / 2 ) * headDecimalPercent );
-        arrowHeadY[ 2 ] = yArrowButt - ( int ) ( ( xDiff / 2 ) * headDecimalPercent );
+        arrowHeadX[ 2 ] = xArrowButt + ( int ) ( ( yDiff / 2 )
+                                                 * headDecimalPercent );
+        arrowHeadY[ 2 ] = yArrowButt - ( int ) ( ( xDiff / 2 )
+                                                 * headDecimalPercent );
 
         g.fillPolygon( arrowHeadX, arrowHeadY, 3 );
 
@@ -112,16 +117,13 @@ public final class ShapeUtilities {
      * indicated by the supplied number of points. It is OK for either array to
      * be larger, but neither can be smaller than this size.
      *
-     * @param xPoints
-     *            An integer array of x coordinates for the polyline
-     * @param yPoints
-     *            An integer array of x coordinates for the polyline
-     * @param numberOfPoints
-     *            The number of integer-based points to make for this polyline
+     * @param xPoints        An integer array of x coordinates for the polyline
+     * @param yPoints        An integer array of x coordinates for the polyline
+     * @param numberOfPoints The number of integer-based points to make for this
+     *                       polyline
      * @return A {@link GeneralPath} that represents an integer-based polyline,
      *         or {@code null} to indicate that no valid polyline could be
      *         created due to inconsistent input arguments
-     *
      * @since 1.0
      */
     public static GeneralPath makePolyline( final int[] xPoints,
@@ -129,8 +131,8 @@ public final class ShapeUtilities {
                                             final int numberOfPoints ) {
         // If no points are requested, or either coordinate array is smaller
         // than the expected number of points, return the empty path.
-        if ( ( numberOfPoints <= 0 ) || ( xPoints.length < numberOfPoints )
-                || ( yPoints.length < numberOfPoints ) ) {
+        if ( ( numberOfPoints <= 0 ) || ( xPoints.length < numberOfPoints ) || (
+                yPoints.length < numberOfPoints ) ) {
             return null;
         }
 
@@ -158,17 +160,15 @@ public final class ShapeUtilities {
      * indicated by the supplied number of points. It is OK for either array to
      * be larger, but neither can be smaller than this size.
      *
-     * @param xPoints
-     *            A single-precision array of x coordinates for the polyline
-     * @param yPoints
-     *            A single-precision array of x coordinates for the polyline
-     * @param numberOfPoints
-     *            The number of single-precision points to make for this
-     *            polyline
+     * @param xPoints        A single-precision array of x coordinates for the
+     *                       polyline
+     * @param yPoints        A single-precision array of x coordinates for the
+     *                       polyline
+     * @param numberOfPoints The number of single-precision points to make for
+     *                       this polyline
      * @return A {@link GeneralPath} that represents a single-precision
      *         polyline, or {@code null} to indicate that no valid polyline
      *         could be created due to inconsistent input arguments
-     *
      * @since 1.0
      */
     public static GeneralPath makePolyline( final float[] xPoints,
@@ -176,8 +176,8 @@ public final class ShapeUtilities {
                                             final int numberOfPoints ) {
         // If no points are requested, or either coordinate array is smaller
         // than the expected number of points, return the empty path.
-        if ( ( numberOfPoints <= 0 ) || ( xPoints.length < numberOfPoints )
-                || ( yPoints.length < numberOfPoints ) ) {
+        if ( ( numberOfPoints <= 0 ) || ( xPoints.length < numberOfPoints ) || (
+                yPoints.length < numberOfPoints ) ) {
             return null;
         }
 
@@ -205,17 +205,15 @@ public final class ShapeUtilities {
      * indicated by the supplied number of points. It is OK for either array to
      * be larger, but neither can be smaller than this size.
      *
-     * @param xPoints
-     *            A double-precision array of x coordinates for the polyline
-     * @param yPoints
-     *            A double-precision array of x coordinates for the polyline
-     * @param numberOfPoints
-     *            The number of double-precision points to make for this
-     *            polyline
+     * @param xPoints        A double-precision array of x coordinates for the
+     *                       polyline
+     * @param yPoints        A double-precision array of x coordinates for the
+     *                       polyline
+     * @param numberOfPoints The number of double-precision points to make for
+     *                       this polyline
      * @return A {@link GeneralPath} that represents a double-precision
      *         polyline, or {@code null} to indicate that no valid polyline
      *         could be created due to inconsistent input arguments
-     *
      * @since 1.0
      */
     public static GeneralPath makePolyline( final double[] xPoints,
@@ -223,8 +221,8 @@ public final class ShapeUtilities {
                                             final int numberOfPoints ) {
         // If no points are requested, or either coordinate array is smaller
         // than the expected number of points, return the empty path.
-        if ( ( numberOfPoints <= 0 ) || ( xPoints.length < numberOfPoints )
-                || ( yPoints.length < numberOfPoints ) ) {
+        if ( ( numberOfPoints <= 0 ) || ( xPoints.length < numberOfPoints ) || (
+                yPoints.length < numberOfPoints ) ) {
             return null;
         }
 
@@ -243,13 +241,14 @@ public final class ShapeUtilities {
      * provided as a continuous pairing of (x, y) or (lat, lon) values.
      *
      * @param coordinates A list of paired (x, y) values (can be (lat, lon) )
-     * @param isXMajor {@code true} if the first coordinate of each pair is the
-     *                 x-coordinate; {@code false} if it is the y-coordinate
-     *                 (typically the case when receiving lat/lon coordinates)
+     * @param isXMajor    {@code true} if the first coordinate of each pair is
+     *                    the x-coordinate; {@code false} if it is the
+     *                    y-coordinate (typically the case when receiving
+     *                    lat/lon coordinates)
      * @return A Closed Irregular Polygon corresponding to input coordinates
      */
-    public static Polygon makePolygon(final List< Double > coordinates,
-                                      final boolean isXMajor ) {
+    public static Polygon makePolygon( final List< Double > coordinates,
+                                       final boolean isXMajor ) {
         final int numberOfCoordinates = ( int ) FastMath.floor(
                 0.5d * coordinates.size() );
         final int[] xpoints = new int[ numberOfCoordinates ];
@@ -261,21 +260,20 @@ public final class ShapeUtilities {
         int valueIndex = 0;
         for ( int i = 0; i < numberOfCoordinates; i++ ) {
             if ( isXMajor ) {
-                xpoints[ i ] = ( int ) FastMath.round(
-                        coordinates.get( valueIndex++ ) );
-                ypoints[ i ] = ( int ) FastMath.round(
-                        coordinates.get( valueIndex++ ) );
+                xpoints[ i ] = ( int ) FastMath.round( coordinates.get(
+                        valueIndex++ ) );
+                ypoints[ i ] = ( int ) FastMath.round( coordinates.get(
+                        valueIndex++ ) );
             }
             else {
-                ypoints[ i ] = ( int ) FastMath.round(
-                        coordinates.get( valueIndex++ ) );
-                xpoints[ i ] = ( int ) FastMath.round(
-                        coordinates.get( valueIndex++ ) );
+                ypoints[ i ] = ( int ) FastMath.round( coordinates.get(
+                        valueIndex++ ) );
+                xpoints[ i ] = ( int ) FastMath.round( coordinates.get(
+                        valueIndex++ ) );
             }
         }
 
-        return new Polygon(
-                xpoints, ypoints, numberOfCoordinates );
+        return new Polygon( xpoints, ypoints, numberOfCoordinates );
     }
 
     /**
@@ -283,13 +281,14 @@ public final class ShapeUtilities {
      * provided as a continuous pairing of (x, y) or (lat, lon) values.
      *
      * @param coordinates A list of paired (x, y) values (can be (lat, lon) )
-     * @param isXMajor {@code true} if the first coordinate of each pair is the
-     *                 x-coordinate; {@code false} if it is the y-coordinate
-     *                 (typically the case when receiving lat/lon coordinates)
+     * @param isXMajor    {@code true} if the first coordinate of each pair is
+     *                    the x-coordinate; {@code false} if it is the
+     *                    y-coordinate (typically the case when receiving
+     *                    lat/lon coordinates)
      * @return A Closed Irregular Polygon corresponding to input coordinates
      */
-    public static Polygon2D makePolygon2D(final List< Double > coordinates,
-                                          final boolean isXMajor ) {
+    public static Polygon2D makePolygon2D( final List< Double > coordinates,
+                                           final boolean isXMajor ) {
         final int numberOfCoordinates = ( int ) FastMath.floor(
                 0.5d * coordinates.size() );
         final float[] xpoints = new float[ numberOfCoordinates ];
@@ -297,30 +296,7 @@ public final class ShapeUtilities {
 
         makePolygonVertices( xpoints, ypoints, coordinates, isXMajor );
 
-        return new Polygon2D(
-                xpoints, ypoints, numberOfCoordinates );
-    }
-
-    /**
-     * Fills a Closed Irregular Polygon from an input list of coordinates
-     * provided as a continuous pairing of (x, y) or (lat, lon) values.
-     *
-     * @param polygon The polygon whose vertices will be filled by this method
-     * @param coordinates A list of paired (x, y) values (can be (lat, lon) )
-     * @param isXMajor {@code true} if the first coordinate of each pair is the
-     *                 x-coordinate; {@code false} if it is the y-coordinate
-     *                 (typically the case when receiving lat/lon coordinates)
-     */
-    public static void updatePolygon2D( final Polygon2D polygon,
-                                        final List< Double > coordinates,
-                                        final boolean isXMajor ) {
-        final int numberOfCoordinates = ( int ) FastMath.floor(
-                0.5d * coordinates.size() );
-        polygon.xpoints = new float[ numberOfCoordinates ];
-        polygon.ypoints = new float[ numberOfCoordinates ];
-
-        polygon.npoints = makePolygonVertices(
-                polygon.xpoints, polygon.ypoints, coordinates, isXMajor );
+        return new Polygon2D( xpoints, ypoints, numberOfCoordinates );
     }
 
     /**
@@ -329,19 +305,19 @@ public final class ShapeUtilities {
      * Fills a Closed Irregular Polygon from an input list of coordinates
      * provided as a continuous pairing of (x, y) or (lat, lon) values.
      *
-     * @param xpoints The list of x-coordinates to fill from (x, y) pairs
-     * @param ypoints The list of y-coordinates to fill from (x, y) pairs
+     * @param xpoints     The list of x-coordinates to fill from (x, y) pairs
+     * @param ypoints     The list of y-coordinates to fill from (x, y) pairs
      * @param coordinates A list of paired (x, y) values (can be (lat, lon) )
-     * @param isXMajor {@code true} if the first coordinate of each pair is the
-     *                 x-coordinate; {@code false} if it is the y-coordinate
-     *                 (typically the case when receiving lat/lon coordinates)
+     * @param isXMajor    {@code true} if the first coordinate of each pair is
+     *                    the x-coordinate; {@code false} if it is the
+     *                    y-coordinate (typically the case when receiving
+     *                    lat/lon coordinates)
      * @return The number of coordinates corresponding to the polygon vertices
      */
-    public static int makePolygonVertices(
-            final float[] xpoints,
-            final float[] ypoints,
-            final List< Double > coordinates,
-            final boolean isXMajor ) {
+    public static int makePolygonVertices( final float[] xpoints,
+                                           final float[] ypoints,
+                                           final List< Double > coordinates,
+                                           final boolean isXMajor ) {
         final int numberOfCoordinates = ( int ) FastMath.floor(
                 0.5d * coordinates.size() );
 
@@ -361,5 +337,31 @@ public final class ShapeUtilities {
         }
 
         return numberOfCoordinates;
+    }
+
+    /**
+     * Fills a Closed Irregular Polygon from an input list of coordinates
+     * provided as a continuous pairing of (x, y) or (lat, lon) values.
+     *
+     * @param polygon     The polygon whose vertices will be filled by this
+     *                    method
+     * @param coordinates A list of paired (x, y) values (can be (lat, lon) )
+     * @param isXMajor    {@code true} if the first coordinate of each pair is
+     *                    the x-coordinate; {@code false} if it is the
+     *                    y-coordinate (typically the case when receiving
+     *                    lat/lon coordinates)
+     */
+    public static void updatePolygon2D( final Polygon2D polygon,
+                                        final List< Double > coordinates,
+                                        final boolean isXMajor ) {
+        final int numberOfCoordinates = ( int ) FastMath.floor(
+                0.5d * coordinates.size() );
+        polygon.xpoints = new float[ numberOfCoordinates ];
+        polygon.ypoints = new float[ numberOfCoordinates ];
+
+        polygon.npoints = makePolygonVertices( polygon.xpoints,
+                                               polygon.ypoints,
+                                               coordinates,
+                                               isXMajor );
     }
 }

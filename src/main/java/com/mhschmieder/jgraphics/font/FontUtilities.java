@@ -46,16 +46,10 @@ import java.text.AttributedString;
  * as getting Font Metrics when we don't already have a Graphics Context at hand
  * for measuring fonts.
  *
- * @version 1.0
- *
  * @author Mark Schmieder
+ * @version 1.0
  */
 public final class FontUtilities {
-
-    /**
-     * The default constructor is disabled, as this is a static utilities class.
-     */
-    private FontUtilities() {}
 
     /**
      * Declare a default drawing context to measure text for vectorization.
@@ -69,10 +63,14 @@ public final class FontUtilities {
      * metrics hints are required for accuracy (though not until Java 1.6).
      */
     public static final FontRenderContext FONT_RENDER_CONTEXT_FOR_VECTORIZATION
-            = new FontRenderContext(
-                    null,
-            false,
-            true );
+            = new FontRenderContext( null, false, true );
+
+    /**
+     * The default constructor is disabled, as this is a static utilities
+     * class.
+     */
+    private FontUtilities() {
+    }
 
     /**
      * Returns the {@link FontRenderContext} used for measuring text when
@@ -80,7 +78,6 @@ public final class FontUtilities {
      *
      * @return A default {@link FontRenderContext} to use for vectorization of
      *         text
-     *
      * @since 1.0
      */
     public static FontRenderContext getFontRenderContextForVectorization() {
@@ -88,90 +85,25 @@ public final class FontUtilities {
     }
 
     /**
-     * Returns the {@link FontMetrics} for the specified {@link Font}.
-     * <p>
-     * This method computes the font metrics when we don't already have a
-     * graphics context at hand for measuring fonts.
-     *
-     * @param fontToMeasure
-     *            The {@link Font} to use for measuring {@link FontMetrics}
-     * @return The {@link FontMetrics} associated with the results of analyzing
-     *         the supplied {@link Font}
-     *
-     * @since 1.0
-     */
-    public static FontMetrics getFontMetrics( final Font fontToMeasure ) {
-        final BufferedImage image = new BufferedImage( 1, 1, BufferedImage.TYPE_INT_RGB );
-        final Graphics2D graphics = image.createGraphics();
-
-        return graphics.getFontMetrics( fontToMeasure );
-    }
-
-    /**
      * Returns a {@link AttributedCharacterIterator} that is used for traversing
      * a {@link String} character by character, which is typical for most vector
      * graphics output formats.
      *
-     * @param str
-     *            The {@link String} to convert to an
-     *            {@link AttributedCharacterIterator}
-     * @param font
-     *            The font to use for determining the text attributes to apply
+     * @param str  The {@link String} to convert to an
+     *             {@link AttributedCharacterIterator}
+     * @param font The font to use for determining the text attributes to apply
      * @return The {@link AttributedCharacterIterator} for this {@link String}
      *         and {@link Font} combination
-     *
      * @since 1.0
      */
-    public static AttributedCharacterIterator getAttributeCharacterIterator(
-            final String str,
-            final Font font ) {
+    public static AttributedCharacterIterator getAttributeCharacterIterator( final String str,
+                                                                             final Font font ) {
         final AttributedString attributedString = new AttributedString( str );
-        AttributedTextUtilities.copyTextAttributes( font, attributedString, 0, str.length() );
+        AttributedTextUtilities.copyTextAttributes( font,
+                                                    attributedString,
+                                                    0,
+                                                    str.length() );
         return attributedString.getIterator();
-    }
-
-    /**
-     * Returns a {@link Font} whose size fits the provided criteria and ensures
-     * that the entire string will display without clipping. It arose from the
-     * specific needs of a polar chart display, making sure that its title and
-     * tic labels don't clip, but can be used in other contexts.
-     *
-     * @param fontCandidate
-     *            The {@link Font} to use as the initial candidate, and which
-     *            defines the Font Family for sizing a good fit
-     * @param maxFontSize
-     *            The minimum Font Size allowed, in points
-     * @param maxCharacterHeight
-     *            The maximum allowed height (in pixels) of a single character
-     * @param maxStringWidth
-     *            The number of pixels available for the string to display
-     *            without clipping in the horizontal dimension
-     * @param longString
-     *            The string to be displayed with the picked {@link Font}
-     * @return The {@link Font} that best meets the input criteria
-     *
-     * @since 1.0
-     */
-    public static Font pickFont( final Font fontCandidate,
-                                 final float maxFontSize,
-                                 final int maxCharacterHeight,
-                                 final int maxStringWidth,
-                                 final String longString ) {
-        Font fontToUse = fontCandidate;
-
-        float fontSize = fontCandidate.getSize2D();
-        while ( fontSize > maxFontSize ) {
-            final FontMetrics fontMetrics = getFontMetrics( fontToUse );
-            if ( ( fontMetrics.getHeight() <= maxCharacterHeight )
-                    && ( fontMetrics.stringWidth( longString ) <= maxStringWidth ) ) {
-                break;
-            }
-
-            fontSize -= 0.5f;
-            fontToUse = fontToUse.deriveFont( fontSize );
-        }
-
-        return fontToUse;
     }
 
     /**
@@ -186,23 +118,21 @@ public final class FontUtilities {
      * resulting string width calculations; usually in the context of
      * calculating label placement (especially for chart axes).
      *
-     * @param graphicsContext
-     *            The {@link Graphics} Graphics Context to use for setting the
-     *            resulting {@link Font} and measuring its {@link FontMetrics}
-     * @param fontCandidate
-     *            The {@link Font} to use as the initial candidate, and which
-     *            defines the Font Family for sizing a good fit
-     * @param maxFontSize
-     *            The minimum Font Size allowed, in points
-     * @param maxCharacterHeight
-     *            The maximum allowed height (in pixels) of a single character
-     * @param maxStringWidth
-     *            The number of pixels available for the string to display
-     *            without clipping in the horizontal dimension
-     * @param longString
-     *            The string to be displayed with the picked {@link Font}
+     * @param graphicsContext    The {@link Graphics} Graphics Context to use
+     *                           for setting the resulting {@link Font} and
+     *                           measuring its {@link FontMetrics}
+     * @param fontCandidate      The {@link Font} to use as the initial
+     *                           candidate, and which defines the Font Family
+     *                           for sizing a good fit
+     * @param maxFontSize        The minimum Font Size allowed, in points
+     * @param maxCharacterHeight The maximum allowed height (in pixels) of a
+     *                           single character
+     * @param maxStringWidth     The number of pixels available for the string
+     *                           to display without clipping in the horizontal
+     *                           dimension
+     * @param longString         The string to be displayed with the picked
+     *                           {@link Font}
      * @return The {@link Font} that best meets the input criteria
-     *
      * @since 1.0
      */
     public static FontMetrics pickFont( final Graphics graphicsContext,
@@ -224,5 +154,69 @@ public final class FontUtilities {
 
         // Measure the Font Metrics for the newly chosen Font.
         return graphicsContext.getFontMetrics( fontToUse );
+    }
+
+    /**
+     * Returns a {@link Font} whose size fits the provided criteria and ensures
+     * that the entire string will display without clipping. It arose from the
+     * specific needs of a polar chart display, making sure that its title and
+     * tic labels don't clip, but can be used in other contexts.
+     *
+     * @param fontCandidate      The {@link Font} to use as the initial
+     *                           candidate, and which defines the Font Family
+     *                           for sizing a good fit
+     * @param maxFontSize        The minimum Font Size allowed, in points
+     * @param maxCharacterHeight The maximum allowed height (in pixels) of a
+     *                           single character
+     * @param maxStringWidth     The number of pixels available for the string
+     *                           to display without clipping in the horizontal
+     *                           dimension
+     * @param longString         The string to be displayed with the picked
+     *                           {@link Font}
+     * @return The {@link Font} that best meets the input criteria
+     * @since 1.0
+     */
+    public static Font pickFont( final Font fontCandidate,
+                                 final float maxFontSize,
+                                 final int maxCharacterHeight,
+                                 final int maxStringWidth,
+                                 final String longString ) {
+        Font fontToUse = fontCandidate;
+
+        float fontSize = fontCandidate.getSize2D();
+        while ( fontSize > maxFontSize ) {
+            final FontMetrics fontMetrics = getFontMetrics( fontToUse );
+            if ( ( fontMetrics.getHeight() <= maxCharacterHeight ) && (
+                    fontMetrics.stringWidth( longString )
+                    <= maxStringWidth ) ) {
+                break;
+            }
+
+            fontSize -= 0.5f;
+            fontToUse = fontToUse.deriveFont( fontSize );
+        }
+
+        return fontToUse;
+    }
+
+    /**
+     * Returns the {@link FontMetrics} for the specified {@link Font}.
+     * <p>
+     * This method computes the font metrics when we don't already have a
+     * graphics context at hand for measuring fonts.
+     *
+     * @param fontToMeasure The {@link Font} to use for measuring
+     *                      {@link FontMetrics}
+     * @return The {@link FontMetrics} associated with the results of analyzing
+     *         the supplied {@link Font}
+     * @since 1.0
+     */
+    public static FontMetrics getFontMetrics( final Font fontToMeasure ) {
+        final BufferedImage image = new BufferedImage( 1,
+                                                       1,
+                                                       BufferedImage.TYPE_INT_RGB );
+        final Graphics2D graphics = image.createGraphics();
+
+        return graphics.getFontMetrics( fontToMeasure );
     }
 }

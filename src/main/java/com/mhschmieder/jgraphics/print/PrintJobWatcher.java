@@ -38,9 +38,8 @@ import javax.print.event.PrintJobEvent;
  * {@code PrintJobWatcher} is a {@link DocPrintJob} watcher that determines when
  * it is safe to close a Print Job's Input Stream.
  *
- * @version 1.0
- *
  * @author Mark Schmieder
+ * @version 1.0
  */
 public final class PrintJobWatcher {
 
@@ -57,9 +56,7 @@ public final class PrintJobWatcher {
      * {@link PrintJobEvent} and use those events to determine when it is safe
      * to close a Print Job's Input Stream.
      *
-     * @param job
-     *            The {@link DocPrintJob} to watch
-     *
+     * @param job The {@link DocPrintJob} to watch
      * @since 1.0
      */
     public PrintJobWatcher( final DocPrintJob job ) {
@@ -67,18 +64,6 @@ public final class PrintJobWatcher {
 
         // Add a Listener to the Print Job for all relevant Print Job Events.
         job.addPrintJobListener( new PrintJobAdapter() {
-
-            private void allDone() {
-                synchronized ( this ) {
-                    done = true;
-                    notify();
-                }
-            }
-
-            @Override
-            public void printJobCanceled( final PrintJobEvent pje ) {
-                allDone();
-            }
 
             @Override
             public void printJobCompleted( final PrintJobEvent pje ) {
@@ -91,10 +76,21 @@ public final class PrintJobWatcher {
             }
 
             @Override
-            public void printJobNoMoreEvents( final PrintJobEvent pje ) {
+            public void printJobCanceled( final PrintJobEvent pje ) {
                 allDone();
             }
 
+            private void allDone() {
+                synchronized ( this ) {
+                    done = true;
+                    notify();
+                }
+            }
+
+            @Override
+            public void printJobNoMoreEvents( final PrintJobEvent pje ) {
+                allDone();
+            }
         } );
     }
 
@@ -117,5 +113,4 @@ public final class PrintJobWatcher {
             ie.printStackTrace();
         }
     }
-
 }

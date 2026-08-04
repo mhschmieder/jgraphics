@@ -49,11 +49,17 @@ import java.util.Map;
  * {@code GraphicsUtilities} is a utility class for Graphics2D based methods,
  * usable in either the AWT or Swing GUI toolkits.
  *
- * @version 1.0
- *
  * @author Mark Schmieder
+ * @version 1.0
  */
 public final class GraphicsUtilities {
+
+    /**
+     * The default constructor is disabled, as this is a static utilities
+     * class.
+     */
+    private GraphicsUtilities() {
+    }
 
     /**
      * This method serves merely as a sanity check that the Maven integration
@@ -63,20 +69,13 @@ public final class GraphicsUtilities {
      * complex projects with dependencies (this project is quite simple and has
      * no dependencies at this time, until more functionality is added).
      *
-     * @param args
-     *            The command-line arguments for executing this class as the
-     *            main entry point for an application
-     *
+     * @param args The command-line arguments for executing this class as the
+     *             main entry point for an application
      * @since 1.0
      */
     public static void main( final String[] args ) {
         System.out.println( "Hello Maven from GraphicsToolkit!" );
     }
-
-    /**
-     * The default constructor is disabled, as this is a static utilities class.
-     */
-    private GraphicsUtilities() {}
 
     /**
      * Returns a single-precision scale factor for mapping the source to the
@@ -88,24 +87,18 @@ public final class GraphicsUtilities {
      * The source and destination are both unit agnostic, but the width and
      * height of each pair should be consistent in order to avoid distortion.
      * <p>
-     * Note that this method is general enough to be completely
-     * toolkit-agnostic regarding AWT, Swing, JavaFX, SWT, JFace, etc.
+     * Note that this method is general enough to be completely toolkit-agnostic
+     * regarding AWT, Swing, JavaFX, SWT, JFace, etc.
      * <p>
      * This version of the method is for when you have single-precision
      * dimensions to work with.
      *
-     * @param sourceWidth
-     *            The width of the source (unit-agnostic)
-     * @param sourceHeight
-     *            The height of the source (unit-agnostic)
-     * @param destinationWidth
-     *            The width of the destination (unit-agnostic)
-     * @param destinationHeight
-     *            The height of the destination (unit-agnostic)
-     *
+     * @param sourceWidth       The width of the source (unit-agnostic)
+     * @param sourceHeight      The height of the source (unit-agnostic)
+     * @param destinationWidth  The width of the destination (unit-agnostic)
+     * @param destinationHeight The height of the destination (unit-agnostic)
      * @return The single-precision scale factor for mapping the source to the
      *         destination without clipping or distorting (that is, stretching)
-     *
      * @since 1.0
      */
     public static float calculateSourceToDestinationScaleFactor( final float sourceWidth,
@@ -137,6 +130,75 @@ public final class GraphicsUtilities {
     }
 
     /**
+     * Applies (after pre-calculating) the source to destination transform to
+     * the supplied {@link Graphics2D} Graphics Context.
+     * <p>
+     * The most common usage context for this function will be for Vector
+     * Graphics Export functionality, where many of the common file formats are
+     * paper-oriented and use different units (and/or origin) from screen
+     * coordinates.
+     * <p>
+     * The transform is applied as a translation followed by a scaling, due to
+     * the ultimate purpose of this method in the context of Vector Graphics
+     * Export functionality. There is no need to support shearing or rotation in
+     * this particular context.
+     *
+     * @param graphicsContext   The {@link Graphics2D} Graphics Context to which
+     *                          the calculated transform should be applied
+     * @param sourceMinX        The lower left x-coordinate of the source
+     *                          bounds
+     * @param sourceMinY        The lower left y-coordinate of the source
+     *                          bounds
+     * @param sourceMaxX        The upper right x-coordinate of the source
+     *                          bounds
+     * @param sourceMaxY        The upper right y-coordinate of the source
+     *                          bounds
+     * @param destinationWidth  The width of the destination bounds/dimensions
+     * @param destinationHeight The height of the destination bounds/dimensions
+     * @since 1.0
+     */
+    public static void applySourceToDestinationTransform( final Graphics2D graphicsContext,
+                                                          final double sourceMinX,
+                                                          final double sourceMinY,
+                                                          final double sourceMaxX,
+                                                          final double sourceMaxY,
+                                                          final double destinationWidth,
+                                                          final double destinationHeight ) {
+        // Calculate the source dimensions from the original mix/max values.
+        final double sourceWidth = FastMath.abs( sourceMaxX - sourceMinX );
+        final double sourceHeight = FastMath.abs( sourceMaxY - sourceMinY );
+
+        // Calculate the scale factor of the source layout to the destination,
+        // in such a way that neither dimension is clipped nor distorted.
+        final double scaleFactor
+                = GraphicsUtilities.calculateSourceToDestinationScaleFactor(
+                sourceWidth,
+                sourceHeight,
+                destinationWidth,
+                destinationHeight );
+
+        // Note that any non-zero minimum (x, y) for the source bounds needs a
+        // translation offset, so that the destination origin is effectively at
+        // zero and the destination bounds do not go beyond destination width or
+        // height. For instance, if minX = 65, we subtract 65 from all
+        // coordinates for destination transform purposes; whereas if minX =
+        // -65, we effectively add 65 to all coordinates during destination
+        // transform. Similarly with the minY offset. Both must be scaled as we
+        // apply the global translation offset before the global scale factor.
+        final double upperLeftX = -( sourceMinX * scaleFactor );
+        final double upperLeftY = -( sourceMinY * scaleFactor );
+
+        // As the translation factor is specified in destination units, and the
+        // scale factor is to be applied from source to destination, the
+        // translation offsets must be written before the uniform scale factors.
+        graphicsContext.translate( upperLeftX, upperLeftY );
+
+        // Scale the source to fit the destination, sans aspect ratio
+        // distortion (that is, with matching x-axis and y-axis scaling).
+        graphicsContext.scale( scaleFactor, scaleFactor );
+    }
+
+    /**
      * Returns a double-precision scale factor for mapping the source to the
      * destination without clipping.
      * <p>
@@ -146,31 +208,24 @@ public final class GraphicsUtilities {
      * The source and destination are both unit agnostic, but the width and
      * height of each pair should be consistent in order to avoid distortion.
      * <p>
-     * Note that this method is general enough to be completely
-     * toolkit-agnostic regarding AWT, Swing, JavaFX, SWT, JFace, etc.
+     * Note that this method is general enough to be completely toolkit-agnostic
+     * regarding AWT, Swing, JavaFX, SWT, JFace, etc.
      * <p>
      * This version of the method is for when you have double-precision
      * dimensions to work with.
      *
-     * @param sourceWidth
-     *            The width of the source (unit-agnostic)
-     * @param sourceHeight
-     *            The height of the source (unit-agnostic)
-     * @param destinationWidth
-     *            The width of the destination (unit-agnostic)
-     * @param destinationHeight
-     *            The height of the destination (unit-agnostic)
-     *
+     * @param sourceWidth       The width of the source (unit-agnostic)
+     * @param sourceHeight      The height of the source (unit-agnostic)
+     * @param destinationWidth  The width of the destination (unit-agnostic)
+     * @param destinationHeight The height of the destination (unit-agnostic)
      * @return The double-precision scale factor for mapping the source to the
      *         destination without clipping or distorting (that is, stretching)
-     *
      * @since 1.0
      */
-    public static double calculateSourceToDestinationScaleFactor(
-            final double sourceWidth,
-            final double sourceHeight,
-            final double destinationWidth,
-            final double destinationHeight ) {
+    public static double calculateSourceToDestinationScaleFactor( final double sourceWidth,
+                                                                  final double sourceHeight,
+                                                                  final double destinationWidth,
+                                                                  final double destinationHeight ) {
         // Find the smallest of the initial source to destination scale factors
         // for width and height and use it for both, to avoid clipping and
         // distorting (stretching) of either dimension.
@@ -196,87 +251,12 @@ public final class GraphicsUtilities {
     }
 
     /**
-     * Applies (after pre-calculating) the source to destination transform to
-     * the supplied {@link Graphics2D} Graphics Context.
-     * <p>
-     * The most common usage context for this function will be for Vector
-     * Graphics Export functionality, where many of the common file formats are
-     * paper-oriented and use different units (and/or origin) from screen
-     * coordinates.
-     * <p>
-     * The transform is applied as a translation followed by a scaling, due to
-     * the ultimate purpose of this method in the context of Vector Graphics
-     * Export functionality. There is no need to support shearing or rotation in
-     * this particular context.
-     *
-     * @param graphicsContext
-     *            The {@link Graphics2D} Graphics Context to which the
-     *            calculated transform should be applied
-     * @param sourceMinX
-     *            The lower left x-coordinate of the source bounds
-     * @param sourceMinY
-     *            The lower left y-coordinate of the source bounds
-     * @param sourceMaxX
-     *            The upper right x-coordinate of the source bounds
-     * @param sourceMaxY
-     *            The upper right y-coordinate of the source bounds
-     * @param destinationWidth
-     *            The width of the destination bounds/dimensions
-     * @param destinationHeight
-     *            The height of the destination bounds/dimensions
-     *
-     * @since 1.0
-     */
-    public static void applySourceToDestinationTransform( final Graphics2D graphicsContext,
-                                                          final double sourceMinX,
-                                                          final double sourceMinY,
-                                                          final double sourceMaxX,
-                                                          final double sourceMaxY,
-                                                          final double destinationWidth,
-                                                          final double destinationHeight ) {
-        // Calculate the source dimensions from the original mix/max values.
-        final double sourceWidth = FastMath.abs( sourceMaxX - sourceMinX );
-        final double sourceHeight = FastMath.abs( sourceMaxY - sourceMinY );
-
-        // Calculate the scale factor of the source layout to the destination,
-        // in such a way that neither dimension is clipped nor distorted.
-        final double scaleFactor = GraphicsUtilities
-                .calculateSourceToDestinationScaleFactor( sourceWidth,
-                                                          sourceHeight,
-                                                          destinationWidth,
-                                                          destinationHeight );
-
-        // Note that any non-zero minimum (x, y) for the source bounds needs a
-        // translation offset, so that the destination origin is effectively at
-        // zero and the destination bounds do not go beyond destination width or
-        // height. For instance, if minX = 65, we subtract 65 from all
-        // coordinates for destination transform purposes; whereas if minX =
-        // -65, we effectively add 65 to all coordinates during destination
-        // transform. Similarly with the minY offset. Both must be scaled as we
-        // apply the global translation offset before the global scale factor.
-        final double upperLeftX = -( sourceMinX * scaleFactor );
-        final double upperLeftY = -( sourceMinY * scaleFactor );
-
-        // As the translation factor is specified in destination units, and the
-        // scale factor is to be applied from source to destination, the
-        // translation offsets must be written before the uniform scale factors.
-        graphicsContext.translate( upperLeftX, upperLeftY );
-
-        // Scale the source to fit the destination, sans aspect ratio
-        // distortion (that is, with matching x-axis and y-axis scaling).
-        graphicsContext.scale( scaleFactor, scaleFactor );
-    }
-
-    /**
      * Returns the inverse of the supplied {@link AffineTransform} matrix.
      *
-     * @param matrix
-     *            The Affine Transform to use as the basis of inversion
-     *
+     * @param matrix The Affine Transform to use as the basis of inversion
      * @return An Affine Transform that is the inverse of the original, or
-     *         {@code null} if the original matrix is null or singular
-     *         (that is, degenerate or otherwise non-invertible)
-     *
+     *         {@code null} if the original matrix is null or singular (that is,
+     *         degenerate or otherwise non-invertible)
      * @since 1.0
      */
     public static AffineTransform getInverseMatrix( final AffineTransform matrix ) {
@@ -308,21 +288,22 @@ public final class GraphicsUtilities {
      *
      * @return The first {@link GraphicsConfiguration} found in the Graphics
      *         Environment's list of Graphics Devices
-     *
      * @since 1.0
      */
     public static GraphicsConfiguration getDeviceConfiguration() {
-        final GraphicsEnvironment graphicsEnvironment = GraphicsEnvironment
-                .getLocalGraphicsEnvironment();
+        final GraphicsEnvironment graphicsEnvironment
+                = GraphicsEnvironment.getLocalGraphicsEnvironment();
 
-        final GraphicsDevice[] graphicsDevices = graphicsEnvironment.getScreenDevices();
+        final GraphicsDevice[] graphicsDevices
+                = graphicsEnvironment.getScreenDevices();
 
         for ( final GraphicsDevice graphicsDevice : graphicsDevices ) {
-            final GraphicsConfiguration[] graphicsConfigurations =
-                                                                 graphicsDevice.getConfigurations();
+            final GraphicsConfiguration[] graphicsConfigurations
+                    = graphicsDevice.getConfigurations();
 
             if ( graphicsConfigurations.length > 0 ) {
-                final GraphicsConfiguration graphicsConfiguration = graphicsConfigurations[ 0 ];
+                final GraphicsConfiguration graphicsConfiguration
+                        = graphicsConfigurations[ 0 ];
                 return graphicsConfiguration;
             }
         }
@@ -333,7 +314,7 @@ public final class GraphicsUtilities {
     /**
      * Returns a flag indicating whether the primary {@link GraphicsDevice} is a
      * retina display (if {@code true}) or not (if {@code false}).
-     *
+     * <p>
      * This method determines if the primary monitor is a retina display, as
      * determined by the OS and the user's settings. We do not care if the
      * secondary monitor is a retina display or not.
@@ -343,33 +324,36 @@ public final class GraphicsUtilities {
      *
      * @return {@code true} if the current primary {@link GraphicsDevice} is a
      *         retina display; {@code false} if it is not a retina display
-     *
      * @since 1.0
      */
-    @SuppressWarnings("nls")
+    @SuppressWarnings( "nls" )
     public static boolean isRetina() {
         boolean isRetina = false;
         try {
             // Get the Graphics Device associated with the default screen. This
             // is then taken as the primary monitor.
-            final GraphicsEnvironment graphicsEnvironment = GraphicsEnvironment
-                    .getLocalGraphicsEnvironment();
-            final GraphicsDevice graphicsDevice = graphicsEnvironment.getDefaultScreenDevice();
+            final GraphicsEnvironment graphicsEnvironment
+                    = GraphicsEnvironment.getLocalGraphicsEnvironment();
+            final GraphicsDevice graphicsDevice
+                    = graphicsEnvironment.getDefaultScreenDevice();
 
             // We expect null if not running on macOS, 1 if the primary monitor
             // is a non-retina device, and 2 if it is a retina device.
-            final Field field = graphicsDevice.getClass().getDeclaredField( "scale" );
+            final Field field = graphicsDevice.getClass()
+                                              .getDeclaredField( "scale" );
             if ( field != null ) {
                 field.setAccessible( true );
                 final Object scale = field.get( graphicsDevice );
-                if ( ( scale instanceof Integer ) && ( ( ( Integer ) scale ).intValue() == 2 ) ) {
+                if ( ( scale instanceof Integer ) && (
+                        ( ( Integer ) scale ).intValue() == 2 ) ) {
                     isRetina = true;
                 }
             }
         }
-        catch ( final NullPointerException | SecurityException | IllegalAccessException
-                | IllegalArgumentException | NoSuchFieldException | HeadlessException
-                | ExceptionInInitializerError e ) {
+        catch ( final NullPointerException | SecurityException |
+                      IllegalAccessException | IllegalArgumentException |
+                      NoSuchFieldException | HeadlessException |
+                      ExceptionInInitializerError e ) {
             // We don't really care about errors and exceptions here, as this
             // method provides information that is usually optional.
             // e.printStackTrace();
@@ -384,7 +368,6 @@ public final class GraphicsUtilities {
      *
      * @return A {@link RenderingHints} instance that is set for rendering
      *         details that are specific to the needs of scientific charting
-     *
      * @since 1.0
      */
     public static RenderingHints getRenderingHintsForCharting() {
@@ -396,20 +379,25 @@ public final class GraphicsUtilities {
         final Map< Key, Object > renderingHintMap = new HashMap<>( 9 );
         renderingHintMap.put( RenderingHints.KEY_ALPHA_INTERPOLATION,
                               RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY );
-        renderingHintMap.put( RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF );
+        renderingHintMap.put( RenderingHints.KEY_ANTIALIASING,
+                              RenderingHints.VALUE_ANTIALIAS_OFF );
         renderingHintMap.put( RenderingHints.KEY_COLOR_RENDERING,
                               RenderingHints.VALUE_COLOR_RENDER_QUALITY );
-        renderingHintMap.put( RenderingHints.KEY_DITHERING, RenderingHints.VALUE_DITHER_ENABLE );
+        renderingHintMap.put( RenderingHints.KEY_DITHERING,
+                              RenderingHints.VALUE_DITHER_ENABLE );
         renderingHintMap.put( RenderingHints.KEY_FRACTIONALMETRICS,
                               RenderingHints.VALUE_FRACTIONALMETRICS_ON );
         renderingHintMap.put( RenderingHints.KEY_INTERPOLATION,
                               RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR );
-        renderingHintMap.put( RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY );
-        renderingHintMap.put( RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE );
+        renderingHintMap.put( RenderingHints.KEY_RENDERING,
+                              RenderingHints.VALUE_RENDER_QUALITY );
+        renderingHintMap.put( RenderingHints.KEY_STROKE_CONTROL,
+                              RenderingHints.VALUE_STROKE_PURE );
         renderingHintMap.put( RenderingHints.KEY_TEXT_ANTIALIASING,
                               RenderingHints.VALUE_TEXT_ANTIALIAS_GASP );
 
-        final RenderingHints renderingHints = new RenderingHints( renderingHintMap );
+        final RenderingHints renderingHints = new RenderingHints(
+                renderingHintMap );
 
         return renderingHints;
     }
@@ -420,7 +408,6 @@ public final class GraphicsUtilities {
      *
      * @return A {@link RenderingHints} instance that is set for rendering
      *         details that are specific to the typical needs of printing
-     *
      * @since 1.0
      */
     public static RenderingHints getRenderingHintsForPrinting() {
@@ -430,20 +417,25 @@ public final class GraphicsUtilities {
         final Map< Key, Object > renderingHintMap = new HashMap<>( 9 );
         renderingHintMap.put( RenderingHints.KEY_ALPHA_INTERPOLATION,
                               RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY );
-        renderingHintMap.put( RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF );
+        renderingHintMap.put( RenderingHints.KEY_ANTIALIASING,
+                              RenderingHints.VALUE_ANTIALIAS_OFF );
         renderingHintMap.put( RenderingHints.KEY_COLOR_RENDERING,
                               RenderingHints.VALUE_COLOR_RENDER_QUALITY );
-        renderingHintMap.put( RenderingHints.KEY_DITHERING, RenderingHints.VALUE_DITHER_ENABLE );
+        renderingHintMap.put( RenderingHints.KEY_DITHERING,
+                              RenderingHints.VALUE_DITHER_ENABLE );
         renderingHintMap.put( RenderingHints.KEY_FRACTIONALMETRICS,
                               RenderingHints.VALUE_FRACTIONALMETRICS_OFF );
         renderingHintMap.put( RenderingHints.KEY_INTERPOLATION,
                               RenderingHints.VALUE_INTERPOLATION_NEAREST_NEIGHBOR );
-        renderingHintMap.put( RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY );
-        renderingHintMap.put( RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE );
+        renderingHintMap.put( RenderingHints.KEY_RENDERING,
+                              RenderingHints.VALUE_RENDER_QUALITY );
+        renderingHintMap.put( RenderingHints.KEY_STROKE_CONTROL,
+                              RenderingHints.VALUE_STROKE_PURE );
         renderingHintMap.put( RenderingHints.KEY_TEXT_ANTIALIASING,
                               RenderingHints.VALUE_TEXT_ANTIALIAS_ON );
 
-        final RenderingHints renderingHints = new RenderingHints( renderingHintMap );
+        final RenderingHints renderingHints = new RenderingHints(
+                renderingHintMap );
 
         return renderingHints;
     }
@@ -454,7 +446,6 @@ public final class GraphicsUtilities {
      *
      * @return A {@link RenderingHints} instance that is set for rendering
      *         details that maximize the legibility of AWT/Swing GUI controls
-     *
      * @since 1.0
      */
     public static RenderingHints getRenderingHintsForControls() {
@@ -468,21 +459,25 @@ public final class GraphicsUtilities {
         final Map< Key, Object > renderingHintMap = new HashMap<>( 9 );
         renderingHintMap.put( RenderingHints.KEY_ALPHA_INTERPOLATION,
                               RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY );
-        renderingHintMap.put( RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON );
+        renderingHintMap.put( RenderingHints.KEY_ANTIALIASING,
+                              RenderingHints.VALUE_ANTIALIAS_ON );
         renderingHintMap.put( RenderingHints.KEY_COLOR_RENDERING,
                               RenderingHints.VALUE_COLOR_RENDER_QUALITY );
-        renderingHintMap.put( RenderingHints.KEY_DITHERING, RenderingHints.VALUE_DITHER_ENABLE );
+        renderingHintMap.put( RenderingHints.KEY_DITHERING,
+                              RenderingHints.VALUE_DITHER_ENABLE );
         renderingHintMap.put( RenderingHints.KEY_FRACTIONALMETRICS,
                               RenderingHints.VALUE_FRACTIONALMETRICS_OFF );
         renderingHintMap.put( RenderingHints.KEY_INTERPOLATION,
                               RenderingHints.VALUE_INTERPOLATION_BICUBIC );
-        renderingHintMap.put( RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY );
+        renderingHintMap.put( RenderingHints.KEY_RENDERING,
+                              RenderingHints.VALUE_RENDER_QUALITY );
         renderingHintMap.put( RenderingHints.KEY_STROKE_CONTROL,
                               RenderingHints.VALUE_STROKE_NORMALIZE );
         renderingHintMap.put( RenderingHints.KEY_TEXT_ANTIALIASING,
                               RenderingHints.VALUE_TEXT_ANTIALIAS_GASP );
 
-        final RenderingHints renderingHints = new RenderingHints( renderingHintMap );
+        final RenderingHints renderingHints = new RenderingHints(
+                renderingHintMap );
 
         return renderingHints;
     }

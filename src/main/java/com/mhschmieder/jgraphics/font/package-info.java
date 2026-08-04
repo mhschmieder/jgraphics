@@ -31,9 +31,5 @@
 /**
  * This package contains the jgraphics Library's font utility classes that are
  * dependent on Graphics2D's Font sub-packages.
- *
- * @version 1.0
- *
- * @author Mark Schmieder
  */
 package com.mhschmieder.jgraphics.font;

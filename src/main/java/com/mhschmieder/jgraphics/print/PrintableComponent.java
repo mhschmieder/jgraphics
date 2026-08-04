@@ -33,7 +33,6 @@ package com.mhschmieder.jgraphics.print;
 import com.mhschmieder.jgraphics.util.GraphicsUtilities;
 import org.apache.commons.math3.util.FastMath;
 
-import javax.swing.JComponent;
 import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -41,14 +40,15 @@ import java.awt.RenderingHints;
 import java.awt.print.PageFormat;
 import java.awt.print.Printable;
 
+import javax.swing.JComponent;
+
 /**
  * {@code PrintableComponent} is a convenient class for wrapping an AWT
  * {@link Component} or a Swing {@link JComponent} in behavior associated with
  * the {@link Printable} interface.
  *
- * @version 1.0
- *
  * @author Mark Schmieder
+ * @version 1.0
  */
 public class PrintableComponent implements Printable {
 
@@ -56,7 +56,7 @@ public class PrintableComponent implements Printable {
      * The original parent {@link Component} whose Graphics Context should be
      * redirected for printing.
      */
-    private final Component      component;
+    private final Component component;
 
     /**
      * Declare Rendering Hints to use for printing.
@@ -69,10 +69,8 @@ public class PrintableComponent implements Printable {
      * This is the default constructor, which wraps an existing
      * {@link Component} in {@link Printable} behavior.
      *
-     * @param parentComponent
-     *            The parent {@link Component} to wrap in {@link Printable}
-     *            behavior
-     *
+     * @param parentComponent The parent {@link Component} to wrap in
+     *                        {@link Printable} behavior
      * @since 1.0
      */
     public PrintableComponent( final Component parentComponent ) {
@@ -91,16 +89,13 @@ public class PrintableComponent implements Printable {
      * <p>
      * This method tries to create a hard copy of the component on a printer.
      *
-     * @param graphicsContext
-     *            A Graphics Context object
-     * @param pageFormat
-     *            The {@link PageFormat} representing the size and orientation
-     *            of the Page being drawn
-     * @param pageIndex
-     *            Page number (starting with 0, as an index) to print
+     * @param graphicsContext A Graphics Context object
+     * @param pageFormat      The {@link PageFormat} representing the size and
+     *                        orientation of the Page being drawn
+     * @param pageIndex       Page number (starting with 0, as an index) to
+     *                        print
      * @return PAGE_EXISTS if the page is rendered successfully or NO_SUCH_PAGE
      *         if pageIndex specifies a non-existent page.
-     *
      * @since 1.0
      */
     @Override
@@ -108,7 +103,8 @@ public class PrintableComponent implements Printable {
                             final PageFormat pageFormat,
                             final int pageIndex ) {
         // Only one page available, when printing individual components.
-        if ( ( graphicsContext == null ) || ( pageFormat == null ) || ( pageIndex > 0 ) ) {
+        if ( ( graphicsContext == null ) || ( pageFormat == null ) || (
+                pageIndex > 0 ) ) {
             return Printable.NO_SUCH_PAGE;
         }
 
@@ -126,16 +122,17 @@ public class PrintableComponent implements Printable {
         final double pageWidth = pageFormat.getImageableWidth();
         final double pageHeight = pageFormat.getImageableHeight();
         final double scale = FastMath.min( ( pageWidth / component.getWidth() ),
-                                       ( pageHeight / component.getHeight() ) );
+                                           ( pageHeight
+                                             / component.getHeight() ) );
         g2.scale( scale, scale );
 
         // Temporarily disable double-buffering to prevent printer sync
         // problems, then reset it after painting the component.
-        final boolean wasDoubleBuffered = PrintUtilities.disableDoubleBuffering( component );
+        final boolean wasDoubleBuffered = PrintUtilities.disableDoubleBuffering(
+                component );
         component.paint( g2 );
         PrintUtilities.setDoubleBuffering( component, wasDoubleBuffered );
 
         return Printable.PAGE_EXISTS;
     }
-
 }

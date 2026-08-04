@@ -38,5 +38,9 @@ package com.mhschmieder.jgraphics.render;
  * arise during graphics or image rendering.
  */
 public enum RenderingState {
-    INACTIVE, STARTED, ACTIVE, CANCELED, FINISHED
+    INACTIVE,
+    STARTED,
+    ACTIVE,
+    CANCELED,
+    FINISHED
 }

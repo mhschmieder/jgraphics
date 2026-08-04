@@ -36,19 +36,20 @@ import java.util.Locale;
  * <code>ScrollingSensitivity</code> is an enumeration of supported mouse
  * scrolling sensitivity levels.
  *
- * @version 1.0
- *
  * @author Mark Schmieder
+ * @version 1.0
  */
 public enum ScrollingSensitivity {
-    OFF, COARSE, MEDIUM, FINE;
+    OFF,
+    COARSE,
+    MEDIUM,
+    FINE;
 
-    public static ScrollingSensitivity canonicalValueOf(
-            final String canonicalScrollingSensitivity ) {
+    public static ScrollingSensitivity canonicalValueOf( final String canonicalScrollingSensitivity ) {
         return ( canonicalScrollingSensitivity != null )
-            ? valueOf( canonicalScrollingSensitivity.toUpperCase(
-                    Locale.ENGLISH ) )
-            : defaultValue();
+               ?
+               valueOf( canonicalScrollingSensitivity.toUpperCase( Locale.ENGLISH ) )
+               : defaultValue();
     }
 
     public static ScrollingSensitivity defaultValue() {

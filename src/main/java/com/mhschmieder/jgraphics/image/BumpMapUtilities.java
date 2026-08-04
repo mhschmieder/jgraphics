@@ -44,53 +44,50 @@ import java.awt.image.WritableRaster;
 public final class BumpMapUtilities {
 
     /**
-     * The default constructor is disabled, as this is a static utilities class.
+     * The default constructor is disabled, as this is a static utilities
+     * class.
      */
-    private BumpMapUtilities() {}
+    private BumpMapUtilities() {
+    }
 
-    public static void updateBumpMap(
-            final WritableRaster writableRaster,
-            final double pixelX,
-            final double pixelY,
-            final double renderedImageScale,
-            final int[] iPixel,
-            final boolean shadingActive,
-            final byte[] bumpValue,
-            final double value,
-            final double minValue,
-            final double maxValue,
-            final WritableRaster writableRasterTexture ) {
+    public static void updateBumpMap( final WritableRaster writableRaster,
+                                      final double pixelX,
+                                      final double pixelY,
+                                      final double renderedImageScale,
+                                      final int[] iPixel,
+                                      final boolean shadingActive,
+                                      final byte[] bumpValue,
+                                      final double value,
+                                      final double minValue,
+                                      final double maxValue,
+                                      final WritableRaster writableRasterTexture ) {
         // This actually sets the pixel in the image to the proper color.
         // NOTE: We now floor vs. ceil (or add 0.5 to the numerator with integer
         //  truncation of the result), to avoid index out of bounds exceptions.
         // NOTE: Reverted to earlier approach as a safety measure, as there are
         //  so many hidden dependencies on the legacy rounding, but this won't
-        //  be necessary once converted to JavaFX anyway as it is floating-point.
+        //  be necessary once converted to JavaFX anyway as it is
+        //  floating-point.
         final int scaledPixelX = ( int ) FastMath.floor(
                 ( pixelX + 0.5d ) / renderedImageScale );
         final int scaledPixelY = ( int ) FastMath.floor(
                 ( pixelY + 0.5d ) / renderedImageScale );
-        writableRaster.setDataElements(
-                scaledPixelX,
-                scaledPixelY,
-                iPixel );
+        writableRaster.setDataElements( scaledPixelX, scaledPixelY, iPixel );
 
         if ( shadingActive ) {
-            bumpValue[ 0 ] = ( byte ) ( ( 255.0d * ( value - minValue ) )
-                    / ( maxValue - minValue ) );
-            writableRasterTexture.setDataElements(
-                    scaledPixelX,
-                    scaledPixelY,
-                    bumpValue );
+            bumpValue[ 0 ] = ( byte ) ( ( 255.0d * ( value - minValue ) ) / (
+                    maxValue - minValue ) );
+            writableRasterTexture.setDataElements( scaledPixelX,
+                                                   scaledPixelY,
+                                                   bumpValue );
         }
     }
 
-    public static void addBumpMapToImage(
-            final boolean shadingActive,
-            final BufferedImage renderedImageTexture,
-            final BufferedImage renderedImage,
-            final LightSourceDirection lightSourceDirection,
-            final int heightScale ) {
+    public static void addBumpMapToImage( final boolean shadingActive,
+                                          final BufferedImage renderedImageTexture,
+                                          final BufferedImage renderedImage,
+                                          final LightSourceDirection lightSourceDirection,
+                                          final int heightScale ) {
         // Conditionally add the bump map to the image.
         if ( shadingActive ) {
             // Create the light in the upper left hand corner as the default.
@@ -119,15 +116,13 @@ public final class BumpMapUtilities {
             }
 
             // Create the texture map from the bump map.
-            final ElevationMap texture = new ElevationMap(
-                    renderedImageTexture,
-                    true,
-                    heightScale );
+            final ElevationMap texture = new ElevationMap( renderedImageTexture,
+                                                           true,
+                                                           heightScale );
 
-            final DirectionalLight sunlight = new DirectionalLight(
-                    light,
-                    1.0d,
-                    Color.WHITE );
+            final DirectionalLight sunlight = new DirectionalLight( light,
+                                                                    1.0d,
+                                                                    Color.WHITE );
 
             final LitSurface litSurface = new LitSurface( 0.0d );
             // 1.0d,

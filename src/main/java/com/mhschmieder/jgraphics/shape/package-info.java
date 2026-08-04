@@ -30,9 +30,5 @@
  */
 /**
  * This package contains the jgraphics Library's shape functionality.
- *
- * @version 1.0
- *
- * @author Mark Schmieder
  */
 package com.mhschmieder.jgraphics.shape;

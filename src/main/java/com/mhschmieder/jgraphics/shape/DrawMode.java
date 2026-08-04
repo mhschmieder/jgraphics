@@ -36,9 +36,8 @@ import java.util.Locale;
  * {@code DrawMode} is an enumeration of available Draw Modes that are common to
  * many graphics contexts; especially for import and export of graphics files.
  *
- * @version 1.0
- *
  * @author Mark Schmieder
+ * @version 1.0
  */
 public enum DrawMode {
     /**
@@ -55,37 +54,35 @@ public enum DrawMode {
     CLIP;
 
     /**
-     * Returns the default Draw Mode, which generally is only useful for
-     * unexpected values that can't convert to a representational string due to
-     * not being one of the listed or supported enumerations for this type. It
-     * can also be used to initialize variables and avoid nulls.
-     *
-     * @return The safest default Draw Mode when the context is unknown
-     *
-     * @since 1.0
-     */
-    public static DrawMode defaultValue() {
-        return STROKE;
-    }
-
-    /**
      * Returns the Draw Mode that corresponds to the string that is passed in,
      * after converting to all upper case so that the conversion is
      * case-agnostic and thus also version-independent (Java has changed its
      * auto-conversion policies for enum values to strings over the years;
      * especially regarding special characters such as underscores).
      *
-     * @param drawModeCanonicalString
-     *            The canonical string representation of a valid Draw Mode
-     *
+     * @param drawModeCanonicalString The canonical string representation of a
+     *                                valid Draw Mode
      * @return The Draw Mode that corresponds to the canonical string
-     *
      * @since 1.0
      */
     public static DrawMode fromCanonicalString( final String drawModeCanonicalString ) {
         return ( drawModeCanonicalString != null )
-            ? valueOf( drawModeCanonicalString.toUpperCase( Locale.ENGLISH ) )
-            : defaultValue();
+               ?
+               valueOf( drawModeCanonicalString.toUpperCase( Locale.ENGLISH ) )
+               : defaultValue();
+    }
+
+    /**
+     * Returns the default Draw Mode, which generally is only useful for
+     * unexpected values that can't convert to a representational string due to
+     * not being one of the listed or supported enumerations for this type. It
+     * can also be used to initialize variables and avoid nulls.
+     *
+     * @return The safest default Draw Mode when the context is unknown
+     * @since 1.0
+     */
+    public static DrawMode defaultValue() {
+        return STROKE;
     }
 
     /**
@@ -96,11 +93,9 @@ public enum DrawMode {
      * @return The all-lower-case canonical string representation of the current
      *         Draw Mode, set to the English Locale as that's how the enum
      *         values themselves are defined
-     *
      * @since 1.0
      */
     public final String toCanonicalString() {
         return toString().toLowerCase( Locale.ENGLISH );
     }
-
 }

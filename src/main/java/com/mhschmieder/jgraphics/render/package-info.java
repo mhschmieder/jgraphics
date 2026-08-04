@@ -31,9 +31,5 @@
 /**
  * This package contains the jgraphics Library's graphics utility classes that
  * are focused on rendering facilities.
- *
- * @version 1.0
- *
- * @author Mark Schmieder
  */
 package com.mhschmieder.jgraphics.render;
