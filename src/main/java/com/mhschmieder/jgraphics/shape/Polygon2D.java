@@ -510,7 +510,8 @@ public class Polygon2D implements Shape, Cloneable, Serializable {
 
     /**
      * Returns an iterator object that iterates along the boundary of the
-     * <code>Polygon2D</code> and provides access to the geometry of the outline
+     * <code>Polygon2D</code> and provides access to the geometry of the
+     * outline
      * of the <code>Shape</code>.  Only SEG_MOVETO, SEG_LINETO, and SEG_CLOSE
      * point types are returned by the iterator. Since polygons are already
      * flat, the <code>flatness</code> parameter is ignored.

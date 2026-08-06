@@ -269,11 +269,12 @@ public class XmlUtilities {
         // actually UTF-8.
         // TODO: Review this decision, and all that follows.
         final String fileContentString = fileContent.toString()
-                                                    .replaceAll(
-                                                            "(?i)encoding"
-                                                            + "=\"UTF-8\"",
-                                                            "encoding=\"ISO"
-                                                            + "-8859-1\"" );
+                                                    .replaceAll( "(?i)encoding"
+                                                                 + "=\"UTF-8\"",
+                                                                 "encoding"
+                                                                 + "=\"ISO"
+                                                                 + "-8859-1"
+                                                                 + "\"" );
 
         // Parse the file content string into an XML-DOM Document.
         try {

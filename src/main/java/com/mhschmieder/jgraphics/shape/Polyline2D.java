@@ -111,11 +111,9 @@ public class Polyline2D implements Shape, Cloneable, Serializable {
                     "npoints > xpoints.length || npoints > ypoints.length" );
         }
         this.npoints = npoints;
-        this.xpoints = new float[ npoints
-                                  + 1 ];   // make space for one more to
+        this.xpoints = new float[ npoints + 1 ];   // make space for one more to
         // close the polyline
-        this.ypoints = new float[ npoints
-                                  + 1 ];   // make space for one more to
+        this.ypoints = new float[ npoints + 1 ];   // make space for one more to
         // close the polyline
         System.arraycopy( xpoints, 0, this.xpoints, 0, npoints );
         System.arraycopy( ypoints, 0, this.ypoints, 0, npoints );
